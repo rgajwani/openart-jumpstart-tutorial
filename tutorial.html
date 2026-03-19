@@ -2003,7 +2003,18 @@
       // Setup track tabs first
       setupTrackTabs();
 
-      // Render content for current module
+      // Check URL for track parameter
+      const urlParams = new URLSearchParams(window.location.search);
+      const requestedTrack = urlParams.get('track');
+      if (requestedTrack && trackMapping[requestedTrack]) {
+        state.currentTrack = requestedTrack;
+        // Update active track button
+        document.querySelectorAll('.track-tab').forEach(tab => tab.classList.remove('active'));
+        document.querySelector(`.track-tab[data-track="${requestedTrack}"]`)?.classList.add('active');
+      }
+
+      // Setup module tabs for current track, then render module 1
+      setupModuleTabs();
       state.currentModule = 1;
       renderTutorialContent(1);
       renderTableOfContents();
@@ -2013,7 +2024,6 @@
       setupVideoPlayer();
       setupScrollSpy();
       setupSearch();
-      setupModuleTabs();
       setupMobilePlayer();
 
       // Handle window resize
