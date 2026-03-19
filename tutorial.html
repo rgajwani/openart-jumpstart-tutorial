@@ -99,17 +99,35 @@
 
     /* TOP NAV BAR */
     nav.top-nav {
-      height: 64px;
       background-color: var(--surface);
       border-bottom: 1px solid var(--border);
       display: flex;
+      flex-wrap: wrap;
       align-items: center;
-      padding: 0 24px;
-      gap: 24px;
+      padding: 12px 24px;
+      gap: 16px;
       position: sticky;
       top: 0;
       z-index: 100;
       flex-shrink: 0;
+    }
+
+    nav.top-nav > :nth-child(1) {
+      order: 1;
+    }
+
+    nav.top-nav > :nth-child(2) {
+      order: 2;
+    }
+
+    nav.top-nav > :nth-child(3) {
+      order: 3;
+      width: 100%;
+    }
+
+    nav.top-nav > :nth-child(4) {
+      order: 4;
+      width: 100%;
     }
 
     .nav-logo {
@@ -122,6 +140,52 @@
 
     .nav-logo span {
       color: var(--green);
+    }
+
+    .nav-tracks {
+      display: flex;
+      gap: 8px;
+      flex: 1;
+    }
+
+    .track-tab {
+      padding: 8px 20px;
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--text-secondary);
+      border-radius: 20px;
+      cursor: pointer;
+      font-family: var(--font-body);
+      font-size: 0.95rem;
+      font-weight: 500;
+      white-space: nowrap;
+      transition: all 0.2s;
+      position: relative;
+    }
+
+    .track-tab:hover {
+      border-color: var(--green);
+      color: var(--text);
+    }
+
+    .track-tab.active {
+      background-color: rgba(22, 216, 102, 0.15);
+      color: var(--green);
+      border-color: var(--green);
+      font-weight: 600;
+    }
+
+    .track-badge {
+      position: absolute;
+      top: -8px;
+      right: -8px;
+      background: var(--green);
+      color: #000;
+      font-size: 0.65rem;
+      font-weight: 700;
+      padding: 2px 6px;
+      border-radius: 10px;
+      text-transform: uppercase;
     }
 
     .nav-modules {
@@ -899,24 +963,31 @@
 
       nav.top-nav {
         flex-wrap: wrap;
-        height: auto;
         padding: 12px;
         gap: 8px;
       }
 
       .nav-logo {
-        flex: 1;
+        order: 1;
+        flex: 0 1 auto;
+      }
+
+      .nav-tracks {
+        order: 2;
+        width: 100%;
+        overflow-x: auto;
+        flex-wrap: nowrap;
       }
 
       .nav-search {
-        order: 2;
+        order: 3;
         width: 100%;
         max-width: none;
         min-width: 0;
       }
 
       .nav-modules {
-        order: 3;
+        order: 4;
         width: 100%;
         flex-wrap: wrap;
         gap: 6px;
@@ -1028,18 +1099,19 @@
     <nav class="top-nav">
       <div class="nav-logo">OpenArt <span>New User Tutorial</span></div>
 
-      <div class="nav-modules">
-        <button class="module-tab active" data-module="1">
-          Module 1
+      <div class="nav-tracks" id="nav-tracks">
+        <button class="track-tab active" data-track="basics">
+          The Basics
+          <span class="track-badge">Start Here</span>
         </button>
-        <button class="module-tab" data-module="2">
-          Module 2
+        <button class="track-tab" data-track="suite-ui">
+          Suite UI
         </button>
-        <button class="module-tab" data-module="3">
-          Module 3
+        <button class="track-tab" data-track="deep-dives">
+          Deep Dives
         </button>
-        <button class="module-tab" data-module="4">
-          Module 4
+        <button class="track-tab" data-track="use-cases">
+          Use Cases
         </button>
       </div>
 
@@ -1051,6 +1123,10 @@
           id="search-input"
         >
         <div class="search-results" id="search-results"></div>
+      </div>
+
+      <div class="nav-modules" id="nav-modules">
+        <!-- Module tabs generated dynamically -->
       </div>
 
       <div class="nav-progress" style="display:none;">
@@ -1160,11 +1236,13 @@
 
   <!-- LOAD TUTORIAL CONTENT DATA -->
   <script src="js/tutorial-content.js"></script>
+  <script src="js/expanded-content.js"></script>
 
   <!-- MAIN APP JAVASCRIPT -->
   <script>
     // ===== STATE MANAGEMENT =====
     const state = {
+      currentTrack: 'basics',
       currentModule: 1,
       currentVideo: null,
       currentTime: 0,
@@ -1195,6 +1273,55 @@
         }
       },
     };
+
+    // ===== TRACK DATA MAPPING =====
+    const trackMapping = {
+      basics: {
+        modules: () => window.TUTORIAL_CONTENT.modules,
+        titles: ['From Idea to Reality', 'Transform With Emotion', 'Advanced Techniques', 'Mastering Quality']
+      },
+      'suite-ui': {
+        modules: () => {
+          if (window.EXPANDED_TRACKS && window.EXPANDED_TRACKS.tracks) {
+            const track = window.EXPANDED_TRACKS.tracks.find(t => t.id === 'suite-ui');
+            return track ? track.modules : [];
+          }
+          return [];
+        },
+        titles: ['OpenArt Suite']
+      },
+      'deep-dives': {
+        modules: () => {
+          if (window.EXPANDED_TRACKS && window.EXPANDED_TRACKS.tracks) {
+            const track = window.EXPANDED_TRACKS.tracks.find(t => t.id === 'deep-dives');
+            return track ? track.modules : [];
+          }
+          return [];
+        },
+        titles: ['Start & End Frame', 'One-Click Story', 'Worlds', 'Motion Control', 'Seamless Loops']
+      },
+      'use-cases': {
+        modules: () => {
+          if (window.EXPANDED_TRACKS && window.EXPANDED_TRACKS.tracks) {
+            const track = window.EXPANDED_TRACKS.tracks.find(t => t.id === 'use-cases');
+            return track ? track.modules : [];
+          }
+          return [];
+        },
+        titles: ['AI Influencer', 'AI Movie', 'Music Video', 'Animated Cartoon']
+      }
+    };
+
+    function getTrackModules(trackId) {
+      const track = trackMapping[trackId];
+      return track ? track.modules() : [];
+    }
+
+    function getModuleTitle(trackId, moduleIndex) {
+      const track = trackMapping[trackId];
+      if (!track || !track.titles) return `Module ${moduleIndex + 1}`;
+      return track.titles[moduleIndex] || `Module ${moduleIndex + 1}`;
+    }
 
     // ===== UTILITY FUNCTIONS =====
     function formatTime(seconds) {
@@ -1354,7 +1481,10 @@
 
       function updateChaptersBar() {
         if (!state.currentVideo) return;
-        const module = window.TUTORIAL_CONTENT.modules[state.currentVideo - 1];
+        const modules = getTrackModules(state.currentTrack);
+        const module = modules[state.currentVideo - 1];
+        if (!module) return;
+
         chaptersBar.innerHTML = '';
 
         module.sections.forEach(section => {
@@ -1378,7 +1508,10 @@
     }
 
     function loadVideo(moduleNum) {
-      const module = window.TUTORIAL_CONTENT.modules[moduleNum - 1];
+      const modules = getTrackModules(state.currentTrack);
+      const module = modules[moduleNum - 1];
+      if (!module) return;
+
       const player = document.getElementById('video-player');
       const videoLoading = document.getElementById('video-loading');
 
@@ -1395,12 +1528,15 @@
     }
 
     function updateVideoHeader(moduleNum, sectionIndex = 0) {
-      const module = window.TUTORIAL_CONTENT.modules[moduleNum - 1];
+      const modules = getTrackModules(state.currentTrack);
+      const module = modules[moduleNum - 1];
+      if (!module) return;
+
       const section = module.sections[sectionIndex];
       const videoTitle = document.getElementById('video-title');
       const videoChapter = document.getElementById('video-chapter');
 
-      videoTitle.textContent = `Module ${moduleNum}: ${module.title}`;
+      videoTitle.textContent = `Module ${moduleNum}: ${getModuleTitle(state.currentTrack, moduleNum - 1)}`;
       videoChapter.textContent = section ? section.title : 'Select a section';
     }
 
@@ -1411,7 +1547,9 @@
       toc.innerHTML = '';
 
       const currentModule = state.currentModule;
-      const module = window.TUTORIAL_CONTENT.modules[currentModule - 1];
+      const modules = getTrackModules(state.currentTrack);
+      const module = modules[currentModule - 1];
+      if (!module) return;
 
       const moduleName = document.createElement('div');
       moduleName.className = 'toc-module';
@@ -1498,7 +1636,9 @@
       const content = document.getElementById('tutorial-content');
       content.innerHTML = '';
 
-      const module = window.TUTORIAL_CONTENT.modules[moduleNum - 1];
+      const modules = getTrackModules(state.currentTrack);
+      const module = modules[moduleNum - 1];
+      if (!module) return;
 
       // Add module title
       const moduleTitle = document.createElement('h2');
@@ -1557,7 +1697,10 @@
 
     // ===== VIDEO INTERACTION =====
     function playSection(moduleNum, sectionIndex) {
-      const module = window.TUTORIAL_CONTENT.modules[moduleNum - 1];
+      const modules = getTrackModules(state.currentTrack);
+      const module = modules[moduleNum - 1];
+      if (!module) return;
+
       const section = module.sections[sectionIndex];
       const player = document.getElementById('video-player');
 
@@ -1625,7 +1768,13 @@
 
     // ===== PROGRESS TRACKING =====
     function updateProgress() {
-      const totalSections = window.TUTORIAL_CONTENT.modules.reduce((sum, m) => sum + m.sections.length, 0);
+      // Calculate progress across all modules in all tracks
+      let totalSections = 0;
+      Object.keys(trackMapping).forEach(trackId => {
+        const modules = getTrackModules(trackId);
+        totalSections += modules.reduce((sum, m) => sum + m.sections.length, 0);
+      });
+
       const completedCount = state.completedSections.size;
 
       // Update nav progress
@@ -1661,19 +1810,26 @@
         }
 
         const results = [];
-        window.TUTORIAL_CONTENT.modules.forEach((module, moduleIndex) => {
-          module.sections.forEach((section, sectionIndex) => {
-            const content = section.title + ' ' + section.content;
-            if (content.toLowerCase().includes(query.toLowerCase())) {
-              results.push({
-                moduleNum: moduleIndex + 1,
-                moduleName: module.title,
-                sectionId: section.id,
-                sectionTitle: section.title,
-                sectionNumber: `${moduleIndex + 1}.${sectionIndex + 1}`,
-                content: content,
-              });
-            }
+
+        // Search in all tracks
+        Object.keys(trackMapping).forEach(trackId => {
+          const modules = getTrackModules(trackId);
+          modules.forEach((module, moduleIndex) => {
+            module.sections.forEach((section, sectionIndex) => {
+              const content = section.title + ' ' + section.content;
+              if (content.toLowerCase().includes(query.toLowerCase())) {
+                results.push({
+                  trackId: trackId,
+                  trackName: trackId.replace('-', ' ').split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' '),
+                  moduleNum: moduleIndex + 1,
+                  moduleName: module.title,
+                  sectionId: section.id,
+                  sectionTitle: section.title,
+                  sectionNumber: `${moduleIndex + 1}.${sectionIndex + 1}`,
+                  content: content,
+                });
+              }
+            });
           });
         });
 
@@ -1686,12 +1842,15 @@
             const item = document.createElement('div');
             item.className = 'search-result-item';
             item.innerHTML = `
-              <div class="search-result-module">Module ${result.moduleNum}</div>
+              <div class="search-result-module">${result.trackName} • Module ${result.moduleNum}</div>
               <div class="search-result-title">${result.sectionNumber} ${result.sectionTitle}</div>
               <div class="search-result-snippet">${getSnippet(result.content, query)}</div>
             `;
             item.addEventListener('click', () => {
-              // Switch to the module containing this result
+              // Switch to the track and module
+              if (state.currentTrack !== result.trackId) {
+                switchTrack(result.trackId);
+              }
               if (state.currentModule !== result.moduleNum) {
                 state.currentModule = result.moduleNum;
                 switchModule(result.moduleNum);
@@ -1728,15 +1887,58 @@
       });
     }
 
-    // ===== MODULE TAB NAVIGATION =====
-    function setupModuleTabs() {
-      document.querySelectorAll('.module-tab').forEach(tab => {
+    // ===== TRACK NAVIGATION =====
+    function setupTrackTabs() {
+      document.querySelectorAll('.track-tab').forEach(tab => {
         tab.addEventListener('click', () => {
-          const moduleNum = parseInt(tab.dataset.module);
-          state.currentModule = moduleNum;
-          switchModule(moduleNum);
+          const trackId = tab.dataset.track;
+          switchTrack(trackId);
         });
       });
+    }
+
+    function switchTrack(trackId) {
+      state.currentTrack = trackId;
+
+      // Update active track button
+      document.querySelectorAll('.track-tab').forEach(tab => {
+        tab.classList.remove('active');
+      });
+      document.querySelector(`.track-tab[data-track="${trackId}"]`).classList.add('active');
+
+      // Regenerate module tabs
+      regenerateModuleTabs();
+
+      // Switch to module 1 of new track
+      state.currentModule = 1;
+      switchModule(1);
+    }
+
+    function regenerateModuleTabs() {
+      const navModules = document.getElementById('nav-modules');
+      const modules = getTrackModules(state.currentTrack);
+
+      navModules.innerHTML = '';
+      modules.forEach((module, index) => {
+        const tab = document.createElement('button');
+        tab.className = 'module-tab';
+        if (index === 0) tab.classList.add('active');
+        tab.dataset.module = (index + 1).toString();
+        tab.textContent = getModuleTitle(state.currentTrack, index);
+
+        tab.addEventListener('click', () => {
+          state.currentModule = index + 1;
+          switchModule(index + 1);
+        });
+
+        navModules.appendChild(tab);
+      });
+    }
+
+    // ===== MODULE TAB NAVIGATION =====
+    function setupModuleTabs() {
+      // Initial generation
+      regenerateModuleTabs();
     }
 
     function switchModule(moduleNum) {
@@ -1744,7 +1946,7 @@
       document.querySelectorAll('.module-tab').forEach(tab => {
         tab.classList.remove('active');
       });
-      document.querySelector(`.module-tab[data-module="${moduleNum}"]`).classList.add('active');
+      document.querySelector(`.module-tab[data-module="${moduleNum}"]`)?.classList.add('active');
 
       // Render new content
       renderTutorialContent(moduleNum);
@@ -1810,6 +2012,9 @@
     function initialize() {
       // Load progress
       Storage.load();
+
+      // Setup track tabs first
+      setupTrackTabs();
 
       // Render content for current module
       state.currentModule = 1;
