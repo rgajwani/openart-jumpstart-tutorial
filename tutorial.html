@@ -1640,6 +1640,14 @@
       moduleDesc.textContent = module.description;
       content.appendChild(moduleDesc);
 
+      // Add disclaimer for Basics track
+      if (state.currentTrack === 'basics') {
+        const disclaimer = document.createElement('p');
+        disclaimer.style.cssText = 'font-style: italic; color: var(--left-pane-text-secondary); font-size: 0.85em; background: #f5f5f0; border-left: 3px solid #ccc; padding: 12px 16px; margin: 0 0 2em 0; border-radius: 0 4px 4px 0;';
+        disclaimer.innerHTML = 'Note: OpenArt launched "OpenArt Suite" with a new UI in March 2026. The content in this section will teach you The Basics, but the UI will look slightly different. For a walk-through on the new OpenArt Suite, select the <a href="#" style="color: var(--green); text-decoration: underline;" onclick="event.preventDefault(); switchTrack(\'suite-ui\');">"Suite UI" learning track</a>.';
+        content.appendChild(disclaimer);
+      }
+
       // Render sections for current module
       module.sections.forEach((section, sectionIndex) => {
         const sectionDiv = document.createElement('section');
