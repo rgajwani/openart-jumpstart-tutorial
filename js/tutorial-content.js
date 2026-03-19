@@ -57,9 +57,9 @@ window.TUTORIAL_CONTENT = {
 <p>From the main dashboard, click the <strong>"Create Image"</strong> button. You'll land in the image creation workspace.</p>
 
 <p><strong>Step 2: Select Your Model</strong></p>
-<p>You'll see a dropdown asking which AI model you want to use. For this course, we recommend <strong>Cream 4.5</strong>. Why? Because it excels at facial consistency and keeps your face looking like <em>you</em> across multiple images. This matters when we're building a narrative with your face as the hero.</p>
+<p>You'll see a dropdown asking which AI model you want to use. For this course, we recommend <strong>Seedream 4.5</strong>. Why? Because it excels at facial consistency and keeps your face looking like <em>you</em> across multiple images. This matters when we're building a narrative with your face as the hero.</p>
 
-<p>Different models have different strengths. Some are better at landscapes, others at abstract art. We're starting with Cream 4.5 because it's the most reliable for personal portraiture.</p>
+<p>Different models have different strengths. Some are better at landscapes, others at abstract art. We're starting with Seedream 4.5 because it's the most reliable for personal portraiture.</p>
 
 <p><strong>Step 3: Upload a Reference Image</strong></p>
 <p>Next, you'll have the option to upload a reference image. This is optional for now, but it's incredibly powerful. Your reference image tells OpenArt: <em>"This is who I want in the image."</em></p>
@@ -136,12 +136,12 @@ window.TUTORIAL_CONTENT = {
         },
         {
           id: "m1-nano-banana",
-          title: "Testing Different Models: Nano Banana Pro",
+          title: "Testing Different Models: Seedream vs. Nano Banana Pro",
           timeStart: 490,
           content: `<p>One of the best ways to understand what AI can do is to test different models with the same prompt. This is where <strong>Nano Banana Pro</strong> comes in.</p>
 
 <p><strong>Why Compare Models?</strong></p>
-<p>Different AI models were trained on different data and optimized for different outcomes. Cream 4.5 might excel at photorealism, while Nano Banana Pro might excel at stylized art. By seeing both results, you understand:</p>
+<p>Different AI models were trained on different data and optimized for different outcomes. Seedream 4.5 might excel at photorealism, while Nano Banana Pro might excel at stylized art. By seeing both results, you understand:</p>
 <ul>
 <li>How models interpret prompts differently</li>
 <li>Which model matches your creative vision</li>
@@ -149,7 +149,7 @@ window.TUTORIAL_CONTENT = {
 </ul>
 
 <p><strong>How to Test</strong></p>
-<p>After you generate images with Cream 4.5, OpenArt shows a button: <strong>"Reuse Settings."</strong> Click it, then change the model dropdown to <strong>Nano Banana Pro</strong>. Keep the same prompt, same reference image, same settings. Hit Create again.</p>
+<p>After you generate images with Seedream 4.5, OpenArt shows a button: <strong>"Reuse Settings."</strong> Click it, then change the model dropdown to <strong>Nano Banana Pro</strong>. Keep the same prompt, same reference image, same settings. Hit Create again.</p>
 
 <p>Now compare the results side-by-side. You might notice:</p>
 <ul>
@@ -158,7 +158,7 @@ window.TUTORIAL_CONTENT = {
 <li>Variations in facial consistency (this varies model-to-model)</li>
 </ul>
 
-<p>There's no "best" model — only the best model for <em>your</em> vision. This module uses Cream 4.5 for consistency, but don't be afraid to experiment.</p>
+<p>There's no "best" model — only the best model for <em>your</em> vision. This module uses Seedream 4.5 for consistency, but don't be afraid to experiment.</p>
 
 <p><a href="#" class="video-link" data-module="1" data-time="490">▶ Watch Nano Banana Pro (8:10)</a></p>`
         },
