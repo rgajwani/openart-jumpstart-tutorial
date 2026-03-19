@@ -1,0 +1,1785 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OpenArt JumpStart - Learn AI Image Creation</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    /* ===== CSS CUSTOM PROPERTIES ===== */
+    :root {
+      --bg: #090a0a;
+      --surface: #141414;
+      --surface-hover: #1e1e1e;
+      --border: #2a2a2a;
+      --text: #ffffff;
+      --text-secondary: #b0b4ba;
+      --text-muted: #6b7280;
+      --green: #16d866;
+      --green-glow: rgba(22, 216, 102, 0.15);
+      --radius: 12px;
+      --font-heading: 'Bricolage Grotesque', sans-serif;
+      --font-body: 'Inter', ui-sans-serif, system-ui, sans-serif;
+    }
+
+    /* ===== RESET & BASE STYLES ===== */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: var(--font-body);
+      font-size: 16px;
+      line-height: 1.6;
+    }
+
+    /* ===== TYPOGRAPHY ===== */
+    h1, h2, h3, h4, h5, h6 {
+      font-family: var(--font-heading);
+      font-weight: 700;
+      line-height: 1.2;
+      margin: 1.5em 0 0.75em 0;
+    }
+
+    h1 { font-size: 2.5rem; }
+    h2 { font-size: 2rem; }
+    h3 { font-size: 1.5rem; }
+    h4 { font-size: 1.25rem; }
+
+    p {
+      margin-bottom: 1em;
+      color: var(--text-secondary);
+    }
+
+    ul, ol {
+      margin: 1em 0 1em 2em;
+      color: var(--text-secondary);
+    }
+
+    li {
+      margin-bottom: 0.5em;
+    }
+
+    strong {
+      color: var(--text);
+      font-weight: 600;
+    }
+
+    a {
+      color: var(--green);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    a:hover {
+      color: #22e878;
+    }
+
+    /* ===== LAYOUT ===== */
+    #app {
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    /* TOP NAV BAR */
+    nav.top-nav {
+      height: 64px;
+      background-color: var(--surface);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      padding: 0 24px;
+      gap: 24px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      flex-shrink: 0;
+    }
+
+    .nav-logo {
+      font-family: var(--font-heading);
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--text);
+      min-width: fit-content;
+    }
+
+    .nav-logo span {
+      color: var(--green);
+    }
+
+    .nav-modules {
+      display: flex;
+      gap: 8px;
+      flex: 1;
+      min-width: 0;
+    }
+
+    .module-tab {
+      padding: 8px 16px;
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--text-secondary);
+      border-radius: 6px;
+      cursor: pointer;
+      font-family: var(--font-body);
+      font-size: 0.9rem;
+      white-space: nowrap;
+      transition: all 0.2s;
+    }
+
+    .module-tab:hover {
+      border-color: var(--green);
+      color: var(--text);
+    }
+
+    .module-tab.active {
+      background-color: var(--green);
+      color: var(--bg);
+      border-color: var(--green);
+      font-weight: 600;
+    }
+
+    .module-tab .progress {
+      font-size: 0.75rem;
+      opacity: 0.7;
+      margin-left: 4px;
+    }
+
+    .nav-search {
+      position: relative;
+      min-width: 200px;
+      max-width: 300px;
+    }
+
+    .search-input {
+      width: 100%;
+      padding: 8px 12px;
+      background-color: var(--surface-hover);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      color: var(--text);
+      font-family: var(--font-body);
+      font-size: 0.9rem;
+      transition: all 0.2s;
+    }
+
+    .search-input:focus {
+      outline: none;
+      border-color: var(--green);
+      box-shadow: 0 0 0 2px var(--green-glow);
+    }
+
+    .search-input::placeholder {
+      color: var(--text-muted);
+    }
+
+    .search-results {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      background-color: var(--surface);
+      border: 1px solid var(--border);
+      border-top: none;
+      border-radius: 0 0 6px 6px;
+      max-height: 400px;
+      overflow-y: auto;
+      display: none;
+      z-index: 200;
+      margin-top: -1px;
+    }
+
+    .search-results.active {
+      display: block;
+    }
+
+    .search-result-item {
+      padding: 12px 16px;
+      cursor: pointer;
+      border-bottom: 1px solid var(--border);
+      transition: background-color 0.2s;
+    }
+
+    .search-result-item:hover {
+      background-color: var(--surface-hover);
+    }
+
+    .search-result-item:last-child {
+      border-bottom: none;
+    }
+
+    .search-result-module {
+      font-size: 0.75rem;
+      color: var(--green);
+      text-transform: uppercase;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    .search-result-title {
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 4px;
+    }
+
+    .search-result-snippet {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      line-height: 1.4;
+    }
+
+    .search-result-snippet .match {
+      background-color: var(--green-glow);
+      color: var(--green);
+      padding: 0 2px;
+      border-radius: 2px;
+    }
+
+    .nav-progress {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      min-width: fit-content;
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+    }
+
+    .nav-progress-bar {
+      width: 120px;
+      height: 4px;
+      background-color: var(--border);
+      border-radius: 2px;
+      overflow: hidden;
+    }
+
+    .nav-progress-fill {
+      height: 100%;
+      background-color: var(--green);
+      transition: width 0.3s;
+    }
+
+    /* MAIN CONTENT CONTAINER */
+    .content-wrapper {
+      display: flex;
+      flex: 1;
+      overflow: hidden;
+      gap: 0;
+    }
+
+    /* LEFT PANE - TUTORIAL CONTENT */
+    .left-pane {
+      flex: 0 0 60%;
+      overflow-y: auto;
+      border-right: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .toc-toggle {
+      padding: 12px 24px;
+      background-color: var(--surface);
+      border-bottom: 1px solid var(--border);
+      display: none;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      transition: color 0.2s;
+    }
+
+    .toc-toggle:hover {
+      color: var(--text);
+    }
+
+    .toc-toggle.hidden-on-desktop {
+      display: none;
+    }
+
+    /* TABLE OF CONTENTS */
+    .table-of-contents {
+      padding: 24px;
+      background-color: var(--surface);
+      border-bottom: 1px solid var(--border);
+      max-height: 300px;
+      overflow-y: auto;
+      transition: max-height 0.3s;
+    }
+
+    .table-of-contents.collapsed {
+      max-height: 0;
+      padding: 0 24px;
+      overflow: hidden;
+    }
+
+    .toc-title {
+      font-family: var(--font-heading);
+      font-weight: 600;
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      margin-bottom: 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .toc-toggle-btn {
+      background: none;
+      border: none;
+      color: var(--green);
+      cursor: pointer;
+      font-size: 1rem;
+      padding: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .toc-module {
+      margin-bottom: 16px;
+    }
+
+    .toc-module-title {
+      font-family: var(--font-heading);
+      font-weight: 600;
+      font-size: 0.95rem;
+      color: var(--text);
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .toc-section {
+      margin-left: 16px;
+      margin-bottom: 4px;
+    }
+
+    .toc-section-link {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 4px 8px;
+      border-radius: 4px;
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .toc-section-link:hover {
+      background-color: var(--surface-hover);
+      color: var(--text);
+    }
+
+    .toc-section-link.active {
+      background-color: var(--green-glow);
+      color: var(--green);
+      font-weight: 500;
+    }
+
+    .toc-section-check {
+      display: none;
+      color: var(--green);
+      font-size: 0.85rem;
+    }
+
+    .toc-section-link.completed .toc-section-check {
+      display: inline;
+    }
+
+    /* TUTORIAL CONTENT */
+    .tutorial-content {
+      flex: 1;
+      overflow-y: auto;
+      padding: 48px;
+    }
+
+    .module-section {
+      margin-bottom: 64px;
+      scroll-margin-top: 64px;
+    }
+
+    .module-divider {
+      margin: 80px 0 48px 0;
+      padding-top: 48px;
+      border-top: 2px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .module-divider-number {
+      font-family: var(--font-heading);
+      font-size: 3rem;
+      font-weight: 800;
+      color: var(--green);
+      opacity: 0.3;
+    }
+
+    .module-divider-text {
+      flex: 1;
+    }
+
+    .module-divider-title {
+      font-family: var(--font-heading);
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--text);
+      margin: 0;
+    }
+
+    .module-divider-desc {
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      margin: 0;
+    }
+
+    .section-title {
+      font-family: var(--font-heading);
+      font-size: 1.75rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-top: 0;
+    }
+
+    .section-subtitle {
+      font-family: var(--font-heading);
+      font-size: 1.3rem;
+      font-weight: 600;
+      color: var(--text);
+      margin-top: 0;
+    }
+
+    .section-content {
+      color: var(--text-secondary);
+    }
+
+    .section-content p {
+      margin-bottom: 1.2em;
+    }
+
+    .section-content ul,
+    .section-content ol {
+      margin: 1.2em 0 1.2em 2em;
+    }
+
+    .section-content li {
+      margin-bottom: 0.6em;
+    }
+
+    .section-content strong {
+      color: var(--text);
+    }
+
+    .section-content a {
+      color: var(--green);
+    }
+
+    .section-content a:hover {
+      text-decoration: underline;
+    }
+
+    .video-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 12px;
+      background-color: var(--green-glow);
+      border: 1px solid var(--green);
+      color: var(--green);
+      border-radius: 6px;
+      font-size: 0.85rem;
+      font-weight: 500;
+      cursor: pointer;
+      margin: 24px 0;
+      transition: all 0.2s;
+    }
+
+    .video-link:hover {
+      background-color: var(--green);
+      color: var(--bg);
+    }
+
+    .video-link-icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 16px;
+      height: 16px;
+    }
+
+    /* RIGHT PANE - VIDEO PLAYER */
+    .right-pane {
+      flex: 0 0 40%;
+      background-color: var(--surface);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      border-left: 1px solid var(--border);
+    }
+
+    .video-header {
+      padding: 16px 24px;
+      border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+    }
+
+    .video-label {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      color: var(--green);
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    .video-title {
+      font-family: var(--font-heading);
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--text);
+      margin: 0;
+    }
+
+    .video-chapter {
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      margin-top: 4px;
+    }
+
+    .video-container {
+      flex: 1;
+      background-color: var(--bg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .video-player {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      display: none;
+    }
+
+    .video-player.active {
+      display: block;
+    }
+
+    .video-loading {
+      position: absolute;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      z-index: 50;
+    }
+
+    .video-loading.active {
+      display: flex;
+    }
+
+    .loading-spinner {
+      width: 40px;
+      height: 40px;
+      border: 3px solid var(--border);
+      border-top-color: var(--green);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    .video-controls-container {
+      background-color: var(--surface);
+      border-top: 1px solid var(--border);
+      padding: 12px 16px;
+      flex-shrink: 0;
+    }
+
+    .video-controls {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 8px;
+    }
+
+    .control-btn {
+      background: none;
+      border: none;
+      color: var(--text-secondary);
+      cursor: pointer;
+      font-size: 1.2rem;
+      padding: 4px 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 4px;
+      transition: all 0.2s;
+    }
+
+    .control-btn:hover {
+      color: var(--green);
+      background-color: var(--surface-hover);
+    }
+
+    .control-btn.active {
+      color: var(--green);
+    }
+
+    .time-display {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      min-width: 80px;
+      text-align: right;
+      font-family: 'Monaco', monospace;
+    }
+
+    .seek-bar {
+      flex: 1;
+      height: 4px;
+      background-color: var(--border);
+      border-radius: 2px;
+      cursor: pointer;
+      position: relative;
+      margin: 0 8px;
+    }
+
+    .seek-progress {
+      height: 100%;
+      background-color: var(--green);
+      border-radius: 2px;
+      pointer-events: none;
+    }
+
+    .seek-bar:hover .seek-thumb {
+      background-color: var(--green);
+      width: 12px;
+      height: 12px;
+      margin-top: -4px;
+    }
+
+    .seek-thumb {
+      position: absolute;
+      width: 8px;
+      height: 8px;
+      background-color: transparent;
+      border-radius: 50%;
+      top: 50%;
+      transform: translateY(-50%);
+      transition: all 0.2s;
+      pointer-events: none;
+    }
+
+    .seek-bar-chapters {
+      display: flex;
+      gap: 2px;
+      margin-top: 4px;
+    }
+
+    .chapter-marker {
+      flex: 1;
+      height: 3px;
+      background-color: var(--border);
+      border-radius: 1px;
+      cursor: pointer;
+      transition: background-color 0.2s;
+    }
+
+    .chapter-marker:hover {
+      background-color: var(--text-secondary);
+    }
+
+    .chapter-marker.passed {
+      background-color: var(--green);
+    }
+
+    .playback-speed {
+      position: relative;
+    }
+
+    .speed-dropdown {
+      position: absolute;
+      bottom: 100%;
+      right: 0;
+      background-color: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      min-width: 100px;
+      display: none;
+      flex-direction: column;
+      z-index: 150;
+      margin-bottom: 8px;
+    }
+
+    .speed-dropdown.active {
+      display: flex;
+    }
+
+    .speed-option {
+      padding: 8px 12px;
+      cursor: pointer;
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      transition: all 0.2s;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .speed-option:last-child {
+      border-bottom: none;
+    }
+
+    .speed-option:hover,
+    .speed-option.active {
+      background-color: var(--surface-hover);
+      color: var(--green);
+    }
+
+    .volume-slider {
+      width: 100px;
+      height: 4px;
+      background-color: var(--border);
+      border-radius: 2px;
+      cursor: pointer;
+      appearance: none;
+      -webkit-appearance: none;
+    }
+
+    .volume-slider::-webkit-slider-thumb {
+      appearance: none;
+      -webkit-appearance: none;
+      width: 10px;
+      height: 10px;
+      background-color: var(--green);
+      border-radius: 50%;
+      cursor: pointer;
+    }
+
+    .volume-slider::-moz-range-thumb {
+      width: 10px;
+      height: 10px;
+      background-color: var(--green);
+      border-radius: 50%;
+      cursor: pointer;
+      border: none;
+    }
+
+    /* MOBILE RESPONSIVE */
+    @media (max-width: 1024px) {
+      .content-wrapper {
+        flex-direction: column;
+      }
+
+      .left-pane {
+        flex: 0 0 auto;
+        min-height: 0;
+        flex: 1;
+        overflow-y: auto;
+      }
+
+      .right-pane {
+        flex: 0 0 60px;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        border-left: none;
+        border-top: 1px solid var(--border);
+        max-height: 60px;
+        transition: max-height 0.3s;
+        z-index: 50;
+      }
+
+      .right-pane.expanded {
+        max-height: 40vh;
+      }
+
+      .video-header {
+        display: none;
+      }
+
+      .video-header.mobile-show {
+        display: block;
+        padding: 8px 12px;
+        border-bottom: 1px solid var(--border);
+      }
+
+      .video-container {
+        display: none;
+      }
+
+      .video-container.mobile-show {
+        display: flex;
+      }
+
+      .video-controls-container {
+        padding: 8px 12px;
+        border-top: none;
+      }
+
+      .video-controls {
+        gap: 8px;
+        margin-bottom: 0;
+      }
+
+      .control-btn {
+        font-size: 1rem;
+        padding: 2px 4px;
+      }
+
+      .time-display {
+        font-size: 0.75rem;
+        min-width: 60px;
+      }
+
+      .volume-slider {
+        display: none;
+      }
+
+      .playback-speed {
+        display: none;
+      }
+
+      .content-wrapper {
+        padding-bottom: 60px;
+      }
+
+      .right-pane.expanded ~ .left-pane {
+        flex: 0;
+      }
+
+      .toc-toggle.hidden-on-desktop {
+        display: flex;
+      }
+
+      .table-of-contents {
+        max-height: 200px;
+        padding: 16px 24px;
+      }
+
+      .tutorial-content {
+        padding: 32px 24px;
+      }
+
+      nav.top-nav {
+        flex-wrap: wrap;
+        height: auto;
+        padding: 12px;
+        gap: 12px;
+      }
+
+      .nav-modules {
+        order: 3;
+        width: 100%;
+        flex-wrap: wrap;
+      }
+
+      .nav-search {
+        min-width: 150px;
+        max-width: none;
+        flex: 1;
+      }
+    }
+
+    @media (max-width: 640px) {
+      h2 {
+        font-size: 1.5rem;
+      }
+
+      h3 {
+        font-size: 1.25rem;
+      }
+
+      nav.top-nav {
+        padding: 12px;
+      }
+
+      .nav-logo {
+        font-size: 1.1rem;
+      }
+
+      .module-tab {
+        padding: 6px 12px;
+        font-size: 0.85rem;
+      }
+
+      .nav-progress {
+        font-size: 0.8rem;
+      }
+
+      .nav-progress-bar {
+        width: 80px;
+      }
+
+      .tutorial-content {
+        padding: 24px 16px;
+      }
+
+      .module-divider {
+        margin: 60px 0 32px 0;
+        gap: 8px;
+      }
+
+      .module-divider-number {
+        font-size: 2rem;
+      }
+
+      .section-title {
+        font-size: 1.5rem;
+      }
+
+      .search-input {
+        font-size: 0.85rem;
+        padding: 6px 10px;
+      }
+    }
+
+    /* UTILITY CLASSES */
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border-width: 0;
+    }
+
+    /* SCROLLBAR STYLING */
+    ::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: var(--bg);
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: var(--border);
+      border-radius: 4px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: var(--text-secondary);
+    }
+  </style>
+</head>
+<body>
+  <div id="app">
+    <!-- TOP NAVIGATION -->
+    <nav class="top-nav">
+      <div class="nav-logo">Open<span>Art</span> JumpStart</div>
+
+      <div class="nav-modules">
+        <button class="module-tab active" data-module="1">
+          Module 1
+          <span class="progress">0/0</span>
+        </button>
+        <button class="module-tab" data-module="2">
+          Module 2
+          <span class="progress">0/0</span>
+        </button>
+        <button class="module-tab" data-module="3">
+          Module 3
+          <span class="progress">0/0</span>
+        </button>
+        <button class="module-tab" data-module="4">
+          Module 4
+          <span class="progress">0/0</span>
+        </button>
+      </div>
+
+      <div class="nav-search">
+        <input
+          type="text"
+          class="search-input"
+          placeholder="Search tutorial..."
+          id="search-input"
+        >
+        <div class="search-results" id="search-results"></div>
+      </div>
+
+      <div class="nav-progress">
+        <span id="progress-text">0/0</span>
+        <div class="nav-progress-bar">
+          <div class="nav-progress-fill" id="progress-bar"></div>
+        </div>
+      </div>
+    </nav>
+
+    <!-- MAIN CONTENT -->
+    <div class="content-wrapper">
+      <!-- LEFT PANE -->
+      <div class="left-pane">
+        <div class="toc-toggle hidden-on-desktop" id="toc-toggle">
+          <span>Table of Contents</span>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="6 9 12 15 18 9"></polyline>
+          </svg>
+        </div>
+
+        <!-- TABLE OF CONTENTS -->
+        <div class="table-of-contents" id="table-of-contents"></div>
+
+        <!-- TUTORIAL CONTENT -->
+        <div class="tutorial-content" id="tutorial-content"></div>
+      </div>
+
+      <!-- RIGHT PANE - VIDEO PLAYER -->
+      <div class="right-pane" id="right-pane">
+        <div class="video-header" id="video-header">
+          <div class="video-label">Currently Playing</div>
+          <h3 class="video-title" id="video-title">Module 1: From Idea to Reality</h3>
+          <div class="video-chapter" id="video-chapter">Introduction & Course Overview</div>
+        </div>
+
+        <div class="video-container">
+          <video
+            class="video-player active"
+            id="video-player"
+            controls="false"
+            preload="metadata"
+          ></video>
+          <div class="video-loading" id="video-loading">
+            <div class="loading-spinner"></div>
+          </div>
+        </div>
+
+        <div class="video-controls-container">
+          <div class="video-controls">
+            <button class="control-btn" id="play-btn" title="Play/Pause">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                <polygon points="5 3 19 12 5 21 5 3"></polygon>
+              </svg>
+            </button>
+
+            <div class="seek-bar" id="seek-bar">
+              <div class="seek-progress" id="seek-progress"></div>
+              <div class="seek-thumb" id="seek-thumb"></div>
+            </div>
+
+            <div class="time-display" id="time-display">0:00 / 0:00</div>
+
+            <button class="control-btn" id="volume-btn" title="Volume">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                <polygon points="3 6 5 6 10 11 10 13 5 18 3 18 3 6"></polygon>
+                <path d="M15.54 3.54a9 9 0 0 1 0 12.73M18.91 7.09a5.9 5.9 0 0 1 0 8.36" stroke="currentColor" stroke-width="2" fill="none"/>
+              </svg>
+            </button>
+
+            <input
+              type="range"
+              min="0"
+              max="100"
+              value="100"
+              class="volume-slider"
+              id="volume-slider"
+              title="Volume"
+            >
+
+            <div class="playback-speed">
+              <button class="control-btn" id="speed-btn" title="Playback Speed">
+                <span style="font-size: 0.85rem; font-weight: 600;">1x</span>
+              </button>
+              <div class="speed-dropdown" id="speed-dropdown">
+                <div class="speed-option" data-speed="0.5">0.5x</div>
+                <div class="speed-option" data-speed="0.75">0.75x</div>
+                <div class="speed-option" data-speed="1" style="font-weight: 600;">1x</div>
+                <div class="speed-option" data-speed="1.25">1.25x</div>
+                <div class="speed-option" data-speed="1.5">1.5x</div>
+                <div class="speed-option" data-speed="2">2x</div>
+              </div>
+            </div>
+
+            <button class="control-btn" id="fullscreen-btn" title="Fullscreen">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path>
+              </svg>
+            </button>
+          </div>
+
+          <div class="seek-bar-chapters" id="chapters-bar"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- LOAD TUTORIAL CONTENT DATA -->
+  <script src="js/tutorial-content.js"></script>
+
+  <!-- MAIN APP JAVASCRIPT -->
+  <script>
+    // ===== STATE MANAGEMENT =====
+    const state = {
+      currentModule: 1,
+      currentVideo: null,
+      currentTime: 0,
+      completedSections: new Set(),
+      scrolling: false,
+      mobilePlayerExpanded: false,
+      isMobile: () => window.innerWidth < 1024,
+    };
+
+    // ===== STORAGE HELPERS =====
+    const Storage = {
+      save() {
+        const data = {
+          completedSections: Array.from(state.completedSections),
+          timestamp: Date.now(),
+        };
+        localStorage.setItem('openart-tutorial-progress', JSON.stringify(data));
+      },
+      load() {
+        const data = localStorage.getItem('openart-tutorial-progress');
+        if (data) {
+          try {
+            const parsed = JSON.parse(data);
+            state.completedSections = new Set(parsed.completedSections);
+          } catch (e) {
+            console.error('Failed to load progress:', e);
+          }
+        }
+      },
+    };
+
+    // ===== UTILITY FUNCTIONS =====
+    function formatTime(seconds) {
+      if (!isFinite(seconds)) return '0:00';
+      const h = Math.floor(seconds / 3600);
+      const m = Math.floor((seconds % 3600) / 60);
+      const s = Math.floor(seconds % 60);
+      if (h > 0) {
+        return `${h}:${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
+      }
+      return `${m}:${String(s).padStart(2, '0')}`;
+    }
+
+    function highlightMatch(text, query) {
+      const regex = new RegExp(`(${query})`, 'gi');
+      return text.replace(regex, '<span class="match">$1</span>');
+    }
+
+    function getSnippet(text, query, length = 150) {
+      const lowerText = text.toLowerCase();
+      const lowerQuery = query.toLowerCase();
+      const index = lowerText.indexOf(lowerQuery);
+
+      if (index === -1) return text.substring(0, length) + '...';
+
+      const start = Math.max(0, index - 50);
+      const end = Math.min(text.length, index + query.length + 100);
+      const snippet = text.substring(start, end);
+
+      return (start > 0 ? '...' : '') +
+             highlightMatch(snippet, query) +
+             (end < text.length ? '...' : '');
+    }
+
+    function debounce(func, delay) {
+      let timeoutId;
+      return function (...args) {
+        clearTimeout(timeoutId);
+        timeoutId = setTimeout(() => func(...args), delay);
+      };
+    }
+
+    // ===== VIDEO PLAYER SETUP =====
+    function setupVideoPlayer() {
+      const player = document.getElementById('video-player');
+      const playBtn = document.getElementById('play-btn');
+      const seekBar = document.getElementById('seek-bar');
+      const seekProgress = document.getElementById('seek-progress');
+      const seekThumb = document.getElementById('seek-thumb');
+      const timeDisplay = document.getElementById('time-display');
+      const volumeSlider = document.getElementById('volume-slider');
+      const speedBtn = document.getElementById('speed-btn');
+      const speedDropdown = document.getElementById('speed-dropdown');
+      const speedOptions = speedDropdown.querySelectorAll('.speed-option');
+      const fullscreenBtn = document.getElementById('fullscreen-btn');
+      const chaptersBar = document.getElementById('chapters-bar');
+
+      // Load first module video
+      loadVideo(1);
+
+      // Play/Pause button
+      playBtn.addEventListener('click', () => {
+        if (player.paused) {
+          player.play();
+          updatePlayBtn();
+        } else {
+          player.pause();
+          updatePlayBtn();
+        }
+      });
+
+      // Update play button icon
+      function updatePlayBtn() {
+        const isPlaying = !player.paused;
+        playBtn.innerHTML = isPlaying
+          ? '<svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16"></rect><rect x="14" y="4" width="4" height="16"></rect></svg>'
+          : '<svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>';
+      }
+
+      player.addEventListener('play', updatePlayBtn);
+      player.addEventListener('pause', updatePlayBtn);
+
+      // Time update
+      player.addEventListener('timeupdate', () => {
+        const duration = player.duration || 0;
+        const percent = (player.currentTime / duration) * 100;
+        seekProgress.style.width = percent + '%';
+
+        // Position thumb
+        const barWidth = seekBar.offsetWidth;
+        const thumbPos = (player.currentTime / duration) * barWidth - 4;
+        seekThumb.style.left = Math.max(0, Math.min(thumbPos, barWidth - 8)) + 'px';
+
+        timeDisplay.textContent = formatTime(player.currentTime) + ' / ' + formatTime(duration);
+        updateChaptersBar();
+      });
+
+      // Metadata loaded
+      player.addEventListener('loadedmetadata', () => {
+        timeDisplay.textContent = '0:00 / ' + formatTime(player.duration);
+        updateChaptersBar();
+      });
+
+      // Seek bar interaction
+      seekBar.addEventListener('click', (e) => {
+        const rect = seekBar.getBoundingClientRect();
+        const percent = (e.clientX - rect.left) / rect.width;
+        player.currentTime = percent * player.duration;
+      });
+
+      // Volume
+      volumeSlider.addEventListener('input', (e) => {
+        player.volume = e.target.value / 100;
+      });
+
+      // Playback speed
+      speedBtn.addEventListener('click', () => {
+        speedDropdown.classList.toggle('active');
+      });
+
+      speedOptions.forEach(option => {
+        option.addEventListener('click', (e) => {
+          const speed = parseFloat(e.target.dataset.speed);
+          player.playbackRate = speed;
+          speedOptions.forEach(opt => opt.classList.remove('active'));
+          e.target.classList.add('active');
+          speedBtn.innerHTML = `<span style="font-size: 0.85rem; font-weight: 600;">${speed}x</span>`;
+          speedDropdown.classList.remove('active');
+        });
+      });
+
+      // Fullscreen
+      fullscreenBtn.addEventListener('click', () => {
+        if (player.requestFullscreen) {
+          player.requestFullscreen();
+        } else if (player.webkitRequestFullscreen) {
+          player.webkitRequestFullscreen();
+        }
+      });
+
+      // Keyboard shortcuts
+      document.addEventListener('keydown', (e) => {
+        if (e.key === ' ' && player === document.activeElement) {
+          e.preventDefault();
+          player.paused ? player.play() : player.pause();
+        }
+        if (e.key === 'f') {
+          fullscreenBtn.click();
+        }
+      });
+
+      // Update play button on load
+      updatePlayBtn();
+
+      // Set initial speed
+      speedOptions[2].classList.add('active');
+
+      function updateChaptersBar() {
+        if (!state.currentVideo) return;
+        const module = window.TUTORIAL_CONTENT.modules[state.currentVideo - 1];
+        chaptersBar.innerHTML = '';
+
+        module.sections.forEach(section => {
+          const marker = document.createElement('div');
+          marker.className = 'chapter-marker';
+          const sectionEnd = section.timeStart;
+          const nextSection = module.sections[module.sections.indexOf(section) + 1];
+          const nextTime = nextSection ? nextSection.timeStart : player.duration;
+
+          if (player.currentTime >= sectionEnd) {
+            marker.classList.add('passed');
+          }
+
+          marker.addEventListener('click', () => {
+            player.currentTime = sectionEnd;
+          });
+
+          chaptersBar.appendChild(marker);
+        });
+      }
+    }
+
+    function loadVideo(moduleNum) {
+      const module = window.TUTORIAL_CONTENT.modules[moduleNum - 1];
+      const player = document.getElementById('video-player');
+      const videoLoading = document.getElementById('video-loading');
+
+      state.currentVideo = moduleNum;
+
+      videoLoading.classList.add('active');
+      player.src = module.videoFile;
+
+      player.addEventListener('canplay', () => {
+        videoLoading.classList.remove('active');
+      }, { once: true });
+
+      updateVideoHeader(moduleNum, 0);
+    }
+
+    function updateVideoHeader(moduleNum, sectionIndex = 0) {
+      const module = window.TUTORIAL_CONTENT.modules[moduleNum - 1];
+      const section = module.sections[sectionIndex];
+      const videoTitle = document.getElementById('video-title');
+      const videoChapter = document.getElementById('video-chapter');
+
+      videoTitle.textContent = `Module ${moduleNum}: ${module.title}`;
+      videoChapter.textContent = section ? section.title : 'Select a section';
+    }
+
+    // ===== TABLE OF CONTENTS =====
+    function renderTableOfContents() {
+      const toc = document.getElementById('table-of-contents');
+      const moduleTabs = document.querySelectorAll('.module-tab');
+
+      toc.innerHTML = '';
+
+      const tocTitle = document.createElement('div');
+      tocTitle.className = 'toc-title';
+      tocTitle.innerHTML = `
+        <span>Contents</span>
+        <button class="toc-toggle-btn" id="toc-collapse-btn" title="Collapse">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="18 15 12 9 6 15"></polyline>
+          </svg>
+        </button>
+      `;
+      toc.appendChild(tocTitle);
+
+      document.getElementById('toc-collapse-btn').addEventListener('click', () => {
+        toc.classList.toggle('collapsed');
+      });
+
+      window.TUTORIAL_CONTENT.modules.forEach((module, moduleIndex) => {
+        const moduleName = document.createElement('div');
+        moduleName.className = 'toc-module';
+
+        const moduleTitle = document.createElement('div');
+        moduleTitle.className = 'toc-module-title';
+
+        const moduleNum = moduleIndex + 1;
+        const completedCount = module.sections.filter(s => state.completedSections.has(s.id)).length;
+        const totalCount = module.sections.length;
+
+        moduleTitle.innerHTML = `
+          <span>Module ${moduleNum}</span>
+          <span style="font-size: 0.8rem; color: var(--text-muted);">${completedCount}/${totalCount}</span>
+        `;
+
+        moduleName.appendChild(moduleTitle);
+
+        module.sections.forEach(section => {
+          const sectionDiv = document.createElement('div');
+          sectionDiv.className = 'toc-section';
+
+          const sectionLink = document.createElement('div');
+          sectionLink.className = 'toc-section-link';
+          if (state.completedSections.has(section.id)) {
+            sectionLink.classList.add('completed');
+          }
+
+          const checkmark = document.createElement('span');
+          checkmark.className = 'toc-section-check';
+          checkmark.innerHTML = '✓';
+
+          sectionLink.appendChild(checkmark);
+          sectionLink.appendChild(document.createTextNode(section.title));
+
+          sectionLink.addEventListener('click', () => {
+            const element = document.getElementById(section.id);
+            if (element) {
+              element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+              // Close ToC on mobile
+              if (state.isMobile()) {
+                document.getElementById('table-of-contents').classList.add('collapsed');
+              }
+            }
+          });
+
+          sectionDiv.appendChild(sectionLink);
+          moduleName.appendChild(sectionDiv);
+        });
+
+        toc.appendChild(moduleName);
+      });
+    }
+
+    // ===== RENDER TUTORIAL CONTENT =====
+    function renderTutorialContent() {
+      const content = document.getElementById('tutorial-content');
+      content.innerHTML = '';
+
+      window.TUTORIAL_CONTENT.modules.forEach((module, moduleIndex) => {
+        const moduleNum = moduleIndex + 1;
+
+        // Add module divider (not before first module)
+        if (moduleIndex > 0) {
+          const divider = document.createElement('div');
+          divider.className = 'module-divider';
+          divider.innerHTML = `
+            <div class="module-divider-number">${moduleNum}</div>
+            <div class="module-divider-text">
+              <h2 class="module-divider-title">${module.title}</h2>
+              <p class="module-divider-desc">${module.description}</p>
+            </div>
+          `;
+          content.appendChild(divider);
+        }
+
+        module.sections.forEach((section, sectionIndex) => {
+          const sectionDiv = document.createElement('section');
+          sectionDiv.id = section.id;
+          sectionDiv.className = 'module-section';
+
+          const title = document.createElement('h3');
+          title.className = 'section-subtitle';
+          title.textContent = section.title;
+
+          const contentDiv = document.createElement('div');
+          contentDiv.className = 'section-content';
+          contentDiv.innerHTML = section.content;
+
+          sectionDiv.appendChild(title);
+          sectionDiv.appendChild(contentDiv);
+
+          // Add video link after content
+          const videoLink = document.createElement('a');
+          videoLink.className = 'video-link';
+          videoLink.dataset.module = moduleNum;
+          videoLink.dataset.sectionIndex = sectionIndex;
+          videoLink.dataset.time = section.timeStart;
+          videoLink.textContent = `▶ Watch (${formatTime(section.timeStart)})`;
+
+          videoLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            playSection(moduleNum, sectionIndex);
+          });
+
+          sectionDiv.appendChild(videoLink);
+          content.appendChild(sectionDiv);
+        });
+
+        // Add module title at the beginning
+        if (moduleIndex === 0) {
+          const moduleTitle = document.createElement('h2');
+          moduleTitle.className = 'section-title';
+          moduleTitle.style.marginTop = '0';
+          moduleTitle.textContent = module.title;
+          content.insertBefore(moduleTitle, content.firstChild);
+
+          const moduleDesc = document.createElement('p');
+          moduleDesc.className = 'section-content';
+          moduleDesc.textContent = module.description;
+          content.insertBefore(moduleDesc, content.children[1]);
+        }
+      });
+    }
+
+    // ===== VIDEO INTERACTION =====
+    function playSection(moduleNum, sectionIndex) {
+      const module = window.TUTORIAL_CONTENT.modules[moduleNum - 1];
+      const section = module.sections[sectionIndex];
+      const player = document.getElementById('video-player');
+
+      // Switch video if needed
+      if (state.currentVideo !== moduleNum) {
+        loadVideo(moduleNum);
+      }
+
+      // Wait for metadata and seek
+      const seekHandler = () => {
+        player.currentTime = section.timeStart;
+        player.play();
+        updateVideoHeader(moduleNum, sectionIndex);
+      };
+
+      if (player.readyState >= 1) {
+        seekHandler();
+      } else {
+        player.addEventListener('loadedmetadata', seekHandler, { once: true });
+      }
+
+      // On mobile, expand player
+      if (state.isMobile()) {
+        expandMobilePlayer();
+      }
+    }
+
+    // ===== SCROLL SPY & PROGRESS TRACKING =====
+    function setupScrollSpy() {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          const id = entry.target.id;
+
+          // Track completion
+          if (entry.isIntersecting && entry.intersectionRatio >= 0.7) {
+            if (!state.completedSections.has(id)) {
+              state.completedSections.add(id);
+              Storage.save();
+              updateProgress();
+              updateTableOfContents();
+            }
+          }
+
+          // Highlight in ToC
+          if (entry.isIntersecting) {
+            document.querySelectorAll('.toc-section-link').forEach(link => {
+              link.classList.remove('active');
+            });
+            const activeLink = document.querySelector(`.toc-section-link:has-text("${entry.target.textContent}")`);
+            if (activeLink) {
+              activeLink.classList.add('active');
+            }
+          }
+        });
+      }, { threshold: [0.7] });
+
+      document.querySelectorAll('[id^="m"]').forEach(section => {
+        observer.observe(section);
+      });
+    }
+
+    // ===== PROGRESS TRACKING =====
+    function updateProgress() {
+      const totalSections = window.TUTORIAL_CONTENT.modules.reduce((sum, m) => sum + m.sections.length, 0);
+      const completedCount = state.completedSections.size;
+
+      // Update nav progress
+      document.getElementById('progress-text').textContent = `${completedCount}/${totalSections}`;
+      document.getElementById('progress-bar').style.width = (completedCount / totalSections) * 100 + '%';
+
+      // Update module tabs
+      document.querySelectorAll('.module-tab').forEach((tab, index) => {
+        const module = window.TUTORIAL_CONTENT.modules[index];
+        const completed = module.sections.filter(s => state.completedSections.has(s.id)).length;
+        tab.querySelector('.progress').textContent = `${completed}/${module.sections.length}`;
+      });
+    }
+
+    function updateTableOfContents() {
+      document.querySelectorAll('.toc-section-link').forEach(link => {
+        const text = link.textContent.trim();
+        const sectionId = Array.from(document.querySelectorAll('[id^="m"]')).find(el =>
+          el.querySelector('.section-subtitle').textContent.includes(text)
+        )?.id;
+
+        if (sectionId && state.completedSections.has(sectionId)) {
+          link.classList.add('completed');
+        } else if (sectionId) {
+          link.classList.remove('completed');
+        }
+      });
+    }
+
+    // ===== SEARCH FUNCTIONALITY =====
+    function setupSearch() {
+      const searchInput = document.getElementById('search-input');
+      const searchResults = document.getElementById('search-results');
+
+      const performSearch = debounce((query) => {
+        if (!query.trim()) {
+          searchResults.classList.remove('active');
+          return;
+        }
+
+        const results = [];
+        window.TUTORIAL_CONTENT.modules.forEach((module, moduleIndex) => {
+          module.sections.forEach(section => {
+            const content = section.title + ' ' + section.content;
+            if (content.toLowerCase().includes(query.toLowerCase())) {
+              results.push({
+                moduleNum: moduleIndex + 1,
+                moduleName: module.title,
+                sectionId: section.id,
+                sectionTitle: section.title,
+                content: content,
+              });
+            }
+          });
+        });
+
+        // Render results
+        searchResults.innerHTML = '';
+        if (results.length === 0) {
+          searchResults.innerHTML = '<div style="padding: 16px; text-align: center; color: var(--text-muted);">No results found</div>';
+        } else {
+          results.slice(0, 10).forEach(result => {
+            const item = document.createElement('div');
+            item.className = 'search-result-item';
+            item.innerHTML = `
+              <div class="search-result-module">Module ${result.moduleNum}</div>
+              <div class="search-result-title">${result.sectionTitle}</div>
+              <div class="search-result-snippet">${getSnippet(result.content, query)}</div>
+            `;
+            item.addEventListener('click', () => {
+              const section = document.getElementById(result.sectionId);
+              if (section) {
+                section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                searchResults.classList.remove('active');
+                searchInput.value = '';
+              }
+            });
+            searchResults.appendChild(item);
+          });
+        }
+
+        searchResults.classList.add('active');
+      }, 300);
+
+      searchInput.addEventListener('input', (e) => {
+        performSearch(e.target.value);
+      });
+
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+          searchResults.classList.remove('active');
+        }
+      });
+
+      searchResults.addEventListener('click', (e) => {
+        if (!e.target.closest('.search-result-item')) {
+          searchResults.classList.remove('active');
+        }
+      });
+    }
+
+    // ===== MODULE TAB NAVIGATION =====
+    function setupModuleTabs() {
+      document.querySelectorAll('.module-tab').forEach(tab => {
+        tab.addEventListener('click', () => {
+          const moduleNum = parseInt(tab.dataset.module);
+          // Scroll to module in tutorial content
+          const module = window.TUTORIAL_CONTENT.modules[moduleNum - 1];
+          const firstSection = module.sections[0];
+          const firstElement = document.getElementById(firstSection.id);
+          if (firstElement) {
+            firstElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }
+        });
+      });
+    }
+
+    // ===== MOBILE PLAYER =====
+    function setupMobilePlayer() {
+      const player = document.getElementById('video-player');
+      const rightPane = document.getElementById('right-pane');
+      const playBtn = document.getElementById('play-btn');
+      const videoHeader = document.getElementById('video-header');
+      const videoContainer = rightPane.querySelector('.video-container');
+
+      if (state.isMobile()) {
+        // Setup mobile collapse/expand
+        playBtn.addEventListener('click', () => {
+          if (rightPane.classList.contains('expanded')) {
+            collapseMobilePlayer();
+          }
+        });
+
+        document.getElementById('toc-toggle').addEventListener('click', () => {
+          document.getElementById('table-of-contents').classList.toggle('collapsed');
+        });
+      }
+    }
+
+    function expandMobilePlayer() {
+      if (!state.isMobile()) return;
+      const rightPane = document.getElementById('right-pane');
+      const videoHeader = document.getElementById('video-header');
+      const videoContainer = rightPane.querySelector('.video-container');
+      rightPane.classList.add('expanded');
+      videoHeader.classList.add('mobile-show');
+      videoContainer.classList.add('mobile-show');
+    }
+
+    function collapseMobilePlayer() {
+      if (!state.isMobile()) return;
+      const rightPane = document.getElementById('right-pane');
+      const videoHeader = document.getElementById('video-header');
+      const videoContainer = rightPane.querySelector('.video-container');
+      rightPane.classList.remove('expanded');
+      videoHeader.classList.remove('mobile-show');
+      videoContainer.classList.remove('mobile-show');
+    }
+
+    // ===== INITIALIZATION =====
+    function initialize() {
+      // Load progress
+      Storage.load();
+
+      // Render content
+      renderTutorialContent();
+      renderTableOfContents();
+      updateProgress();
+
+      // Setup features
+      setupVideoPlayer();
+      setupScrollSpy();
+      setupSearch();
+      setupModuleTabs();
+      setupMobilePlayer();
+
+      // Handle window resize
+      window.addEventListener('resize', () => {
+        // Recalculate layouts on resize
+      });
+
+      console.log('OpenArt JumpStart tutorial loaded');
+    }
+
+    // Start when DOM is ready
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initialize);
+    } else {
+      initialize();
+    }
+  </script>
+</body>
+</html>

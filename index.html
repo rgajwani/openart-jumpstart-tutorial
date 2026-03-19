@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>New User JumpStart — OpenArt Beginner Course</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #090a0a;
+      --surface: #141414;
+      --surface-hover: #1e1e1e;
+      --border: #2a2a2a;
+      --text: #ffffff;
+      --text-secondary: #b0b4ba;
+      --text-muted: #6b7280;
+      --green: #16d866;
+      --green-glow: rgba(22, 216, 102, 0.15);
+      --green-dark: #0fa84e;
+      --radius: 12px;
+      --radius-lg: 20px;
+      --radius-pill: 46px;
+      --font-heading: 'Bricolage Grotesque', sans-serif;
+      --font-body: 'Inter', ui-sans-serif, system-ui, sans-serif;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-body);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      background: rgba(9,10,10,0.85);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 2rem;
+      height: 64px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .nav-logo {
+      display: flex; align-items: center; gap: 12px;
+      text-decoration: none; color: var(--text);
+    }
+    .nav-logo svg { width: 32px; height: 32px; }
+    .nav-logo span {
+      font-family: var(--font-heading);
+      font-weight: 700; font-size: 18px;
+    }
+    .nav-links { display: flex; gap: 8px; }
+    .nav-links a {
+      color: var(--text-secondary); text-decoration: none;
+      padding: 8px 16px; border-radius: var(--radius-pill);
+      font-size: 14px; font-weight: 500; transition: all 0.2s;
+    }
+    .nav-links a:hover { color: var(--text); background: var(--surface); }
+    .nav-cta {
+      background: var(--green) !important; color: #000 !important;
+      font-weight: 600 !important;
+    }
+    .nav-cta:hover { background: var(--green-dark) !important; }
+
+    /* HERO */
+    .hero {
+      min-height: 100vh; display: flex; flex-direction: column;
+      align-items: center; justify-content: center; text-align: center;
+      padding: 120px 2rem 80px;
+      background: radial-gradient(ellipse at 50% 0%, rgba(22,216,102,0.06) 0%, transparent 60%);
+    }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: var(--green-glow); color: var(--green);
+      padding: 6px 16px; border-radius: var(--radius-pill);
+      font-size: 13px; font-weight: 600;
+      margin-bottom: 2rem; border: 1px solid rgba(22,216,102,0.2);
+    }
+    .hero h1 {
+      font-family: var(--font-heading);
+      font-size: clamp(40px, 6vw, 72px);
+      font-weight: 800; line-height: 1.1;
+      letter-spacing: -1.5px;
+      margin-bottom: 1.5rem;
+      background: linear-gradient(135deg, #fff 0%, #b0b4ba 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }
+    .hero h1 em {
+      font-style: normal;
+      background: linear-gradient(135deg, var(--green) 0%, #4ade80 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }
+    .hero p {
+      font-size: clamp(16px, 2vw, 20px);
+      color: var(--text-secondary);
+      max-width: 640px; margin: 0 auto 3rem;
+    }
+    .hero-actions { display: flex; gap: 16px; flex-wrap: wrap; justify-content: center; }
+    .btn-primary {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: var(--green); color: #000;
+      padding: 14px 32px; border-radius: var(--radius-pill);
+      font-size: 16px; font-weight: 700; text-decoration: none;
+      transition: all 0.2s; border: none; cursor: pointer;
+    }
+    .btn-primary:hover { background: var(--green-dark); transform: translateY(-1px); }
+    .btn-secondary {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: var(--surface); color: var(--text);
+      padding: 14px 32px; border-radius: var(--radius-pill);
+      font-size: 16px; font-weight: 600; text-decoration: none;
+      border: 1px solid var(--border); transition: all 0.2s;
+    }
+    .btn-secondary:hover { background: var(--surface-hover); border-color: #444; }
+
+    /* STATS */
+    .stats {
+      display: flex; gap: 48px; justify-content: center;
+      margin-top: 4rem; padding-top: 3rem;
+      border-top: 1px solid var(--border);
+    }
+    .stat { text-align: center; }
+    .stat-value {
+      font-family: var(--font-heading);
+      font-size: 28px; font-weight: 700; color: var(--green);
+    }
+    .stat-label { font-size: 13px; color: var(--text-muted); margin-top: 4px; }
+
+    /* MODULES SECTION */
+    .modules-section {
+      padding: 80px 2rem;
+      max-width: 1200px; margin: 0 auto;
+    }
+    .modules-section h2 {
+      font-family: var(--font-heading);
+      font-size: 36px; font-weight: 700;
+      text-align: center; margin-bottom: 1rem;
+    }
+    .modules-section > p {
+      color: var(--text-secondary);
+      text-align: center; max-width: 600px;
+      margin: 0 auto 3rem; font-size: 16px;
+    }
+    .module-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 20px;
+    }
+    .module-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 28px;
+      transition: all 0.3s;
+      text-decoration: none; color: var(--text);
+      display: flex; flex-direction: column;
+    }
+    .module-card:hover {
+      border-color: var(--green);
+      background: var(--surface-hover);
+      transform: translateY(-4px);
+      box-shadow: 0 12px 40px rgba(22,216,102,0.08);
+    }
+    .module-num {
+      font-family: var(--font-heading);
+      font-size: 13px; font-weight: 700;
+      color: var(--green); text-transform: uppercase;
+      letter-spacing: 1px; margin-bottom: 12px;
+    }
+    .module-card h3 {
+      font-family: var(--font-heading);
+      font-size: 20px; font-weight: 700;
+      margin-bottom: 10px; line-height: 1.3;
+    }
+    .module-card p {
+      font-size: 14px; color: var(--text-secondary);
+      flex: 1; margin-bottom: 16px;
+    }
+    .module-meta {
+      display: flex; gap: 16px; font-size: 13px; color: var(--text-muted);
+    }
+    .module-meta span { display: flex; align-items: center; gap: 4px; }
+
+    /* FEATURES */
+    .features-section {
+      padding: 80px 2rem;
+      background: linear-gradient(180deg, transparent, rgba(22,216,102,0.02), transparent);
+    }
+    .features-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 24px; max-width: 1000px; margin: 0 auto;
+    }
+    .feature {
+      display: flex; gap: 16px; padding: 24px;
+      background: var(--surface); border-radius: var(--radius);
+      border: 1px solid var(--border);
+    }
+    .feature-icon {
+      width: 40px; height: 40px; min-width: 40px;
+      background: var(--green-glow); border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 18px;
+    }
+    .feature h3 { font-size: 16px; font-weight: 600; margin-bottom: 6px; }
+    .feature p { font-size: 14px; color: var(--text-secondary); }
+
+    /* FOOTER */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 3rem 2rem; text-align: center;
+    }
+    .footer-links {
+      display: flex; gap: 24px; justify-content: center;
+      margin-bottom: 1.5rem; flex-wrap: wrap;
+    }
+    .footer-links a {
+      color: var(--text-muted); text-decoration: none;
+      font-size: 14px; transition: color 0.2s;
+    }
+    .footer-links a:hover { color: var(--green); }
+    .footer-copy { font-size: 13px; color: var(--text-muted); }
+
+    /* RESPONSIVE */
+    @media (max-width: 768px) {
+      nav { padding: 0 1rem; }
+      .nav-links { display: none; }
+      .hero { padding: 100px 1.5rem 60px; }
+      .stats { gap: 24px; flex-wrap: wrap; }
+      .modules-section { padding: 60px 1.5rem; }
+      .module-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="/" class="nav-logo">
+    <svg viewBox="0 0 32 32" fill="none">
+      <path d="M8 8L16 4L24 8V16L16 28L8 16V8Z" stroke="#16d866" stroke-width="2" fill="none"/>
+      <path d="M12 12L16 10L20 12V16L16 22L12 16V12Z" fill="#16d866" opacity="0.3"/>
+    </svg>
+    <span>OpenArt JumpStart</span>
+  </a>
+  <div class="nav-links">
+    <a href="tutorial.html">Tutorial</a>
+    <a href="https://openart.ai/tutorials/?ref=course" target="_blank" class="nav-cta">Open OpenArt</a>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hero-badge">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+    Beginner-Friendly Course
+  </div>
+  <h1>Dream Big With AI:<br><em>New User JumpStart</em></h1>
+  <p>Your complete written guide to OpenArt's beginner video course. Read at your own pace with synchronized video playback, or follow along step-by-step.</p>
+  <div class="hero-actions">
+    <a href="tutorial.html" class="btn-primary">
+      Start Learning
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+    </a>
+    <a href="https://openart.ai/tutorials/?ref=course" target="_blank" class="btn-secondary">
+      Visit OpenArt
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3"/></svg>
+    </a>
+  </div>
+  <div class="stats">
+    <div class="stat">
+      <div class="stat-value">4</div>
+      <div class="stat-label">Video Modules</div>
+    </div>
+    <div class="stat">
+      <div class="stat-value">54 min</div>
+      <div class="stat-label">Total Video</div>
+    </div>
+    <div class="stat">
+      <div class="stat-value">33</div>
+      <div class="stat-label">Tutorial Sections</div>
+    </div>
+    <div class="stat">
+      <div class="stat-value">100%</div>
+      <div class="stat-label">Free</div>
+    </div>
+  </div>
+</section>
+
+<section class="modules-section">
+  <h2>Course Modules</h2>
+  <p>Four progressive lessons that take you from zero experience to creating your own AI-generated stories.</p>
+  <div class="module-grid">
+    <a href="tutorial.html#module-1" class="module-card">
+      <div class="module-num">Module 1</div>
+      <h3>From Idea to Reality</h3>
+      <p>Create your first AI image. Learn prompting basics, reference images, and model selection to place yourself in any scene.</p>
+      <div class="module-meta">
+        <span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg> 11:37</span>
+        <span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg> 9 sections</span>
+      </div>
+    </a>
+    <a href="tutorial.html#module-2" class="module-card">
+      <div class="module-num">Module 2</div>
+      <h3>Transform With Emotion</h3>
+      <p>Add life to AI images with emotion and expression. Master before-and-after transformations and multiple reference images.</p>
+      <div class="module-meta">
+        <span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg> 9:13</span>
+        <span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg> 7 sections</span>
+      </div>
+    </a>
+    <a href="tutorial.html#module-3" class="module-card">
+      <div class="module-num">Module 3</div>
+      <h3>From Image to Motion</h3>
+      <p>Bring images to life with AI video. Learn Start &amp; End frame techniques, video models, and scene transitions.</p>
+      <div class="module-meta">
+        <span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg> 15:36</span>
+        <span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg> 7 sections</span>
+      </div>
+    </a>
+    <a href="tutorial.html#module-4" class="module-card">
+      <div class="module-num">Module 4</div>
+      <h3>Bringing It All Together</h3>
+      <p>Combine all techniques to create your complete AI story. Timeline editing, music, and exporting your final video.</p>
+      <div class="module-meta">
+        <span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg> 17:34</span>
+        <span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg> 9 sections</span>
+      </div>
+    </a>
+  </div>
+</section>
+
+<section class="features-section">
+  <div class="features-grid">
+    <div class="feature">
+      <div class="feature-icon">📖</div>
+      <div>
+        <h3>Read at Your Own Pace</h3>
+        <p>Full written tutorial you can skim, search, and reference — no need to rewind videos.</p>
+      </div>
+    </div>
+    <div class="feature">
+      <div class="feature-icon">🎬</div>
+      <div>
+        <h3>Synced Video Player</h3>
+        <p>Click any reference to jump to that exact moment in the video. Read and watch side by side.</p>
+      </div>
+    </div>
+    <div class="feature">
+      <div class="feature-icon">🔍</div>
+      <div>
+        <h3>Search Everything</h3>
+        <p>Find any topic instantly across all four modules with full-text search.</p>
+      </div>
+    </div>
+    <div class="feature">
+      <div class="feature-icon">📊</div>
+      <div>
+        <h3>Track Your Progress</h3>
+        <p>Your reading progress is saved automatically. Pick up right where you left off.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-links">
+    <a href="tutorial.html">Start Tutorial</a>
+    <a href="https://openart.ai" target="_blank">OpenArt.ai</a>
+    <a href="https://x.com/openart_ai" target="_blank">Twitter</a>
+    <a href="https://www.instagram.com/openart_ai/" target="_blank">Instagram</a>
+    <a href="https://www.tiktok.com/@openart_ai" target="_blank">TikTok</a>
+  </div>
+  <p class="footer-copy">Based on OpenArt's "Dream Big With AI" Beginner Course by Bob Doyle</p>
+</footer>
+
+</body>
+</html>
