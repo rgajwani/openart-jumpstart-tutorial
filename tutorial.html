@@ -297,8 +297,8 @@
     .toc-toggle {
       padding: 12px 24px;
       background-color: var(--left-pane-bg);
-      border-bottom: 1px solid var(--border);
-      display: none;
+      border-bottom: 1px solid #e0e0e0;
+      display: flex;
       align-items: center;
       gap: 8px;
       cursor: pointer;
@@ -311,8 +311,16 @@
       color: var(--left-pane-text);
     }
 
-    .toc-toggle.hidden-on-desktop {
-      display: none;
+    .toc-toggle svg {
+      transition: transform 0.3s;
+    }
+
+    .toc-toggle.collapsed svg {
+      transform: rotate(0deg);
+    }
+
+    .toc-toggle:not(.collapsed) svg {
+      transform: rotate(180deg);
     }
 
     /* TABLE OF CONTENTS */
@@ -331,49 +339,7 @@
       overflow: hidden;
     }
 
-    .toc-title {
-      font-family: var(--font-heading);
-      font-weight: 600;
-      font-size: 0.9rem;
-      color: var(--left-pane-text-secondary);
-      text-transform: uppercase;
-      margin-bottom: 12px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .toc-toggle-btn {
-      background: none;
-      border: none;
-      color: var(--green);
-      cursor: pointer;
-      font-size: 1rem;
-      padding: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .toc-collapse-indicator {
-      background: none;
-      border: none;
-      color: var(--green);
-      cursor: pointer;
-      font-size: 1rem;
-      padding: 4px 8px;
-      display: none;
-      align-items: center;
-      justify-content: center;
-      position: fixed;
-      top: 24px;
-      left: 24px;
-      z-index: 50;
-    }
-
-    .toc-collapse-indicator.visible {
-      display: flex;
-    }
+    /* TOC title and collapse indicator removed — toggle header handles it */
 
     .toc-module {
       margin-bottom: 16px;
@@ -920,9 +886,7 @@
         flex: 0;
       }
 
-      .toc-toggle.hidden-on-desktop {
-        display: flex;
-      }
+      /* toc-toggle is already flex on desktop, no override needed */
 
       .table-of-contents {
         max-height: 200px;
@@ -1095,7 +1059,7 @@
     <div class="content-wrapper">
       <!-- LEFT PANE -->
       <div class="left-pane">
-        <div class="toc-toggle hidden-on-desktop" id="toc-toggle">
+        <div class="toc-toggle" id="toc-toggle">
           <span>Table of Contents</span>
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <polyline points="6 9 12 15 18 9"></polyline>
@@ -1439,24 +1403,6 @@
       const toc = document.getElementById('table-of-contents');
 
       toc.innerHTML = '';
-
-      const tocTitle = document.createElement('div');
-      tocTitle.className = 'toc-title';
-      tocTitle.innerHTML = `
-        <span>Contents</span>
-        <button class="toc-toggle-btn" id="toc-collapse-btn" title="Collapse">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <polyline points="18 15 12 9 6 15"></polyline>
-          </svg>
-        </button>
-      `;
-      toc.appendChild(tocTitle);
-
-      document.getElementById('toc-collapse-btn').addEventListener('click', () => {
-        const isCollapsed = toc.classList.contains('collapsed');
-        toc.classList.toggle('collapsed');
-        updateCollapseIndicator(!isCollapsed);
-      });
 
       const currentModule = state.currentModule;
       const module = window.TUTORIAL_CONTENT.modules[currentModule - 1];
@@ -1816,19 +1762,20 @@
       const videoHeader = document.getElementById('video-header');
       const videoContainer = rightPane.querySelector('.video-container');
 
+      // TOC toggle works on both desktop and mobile
+      const tocToggle = document.getElementById('toc-toggle');
+      tocToggle.addEventListener('click', () => {
+        const toc = document.getElementById('table-of-contents');
+        toc.classList.toggle('collapsed');
+        tocToggle.classList.toggle('collapsed');
+      });
+
       if (state.isMobile()) {
         // Setup mobile collapse/expand
         playBtn.addEventListener('click', () => {
           if (rightPane.classList.contains('expanded')) {
             collapseMobilePlayer();
           }
-        });
-
-        document.getElementById('toc-toggle').addEventListener('click', () => {
-          const toc = document.getElementById('table-of-contents');
-          const isCollapsed = toc.classList.contains('collapsed');
-          toc.classList.toggle('collapsed');
-          updateCollapseIndicator(!isCollapsed);
         });
       }
     }
