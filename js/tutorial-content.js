@@ -27,18 +27,6 @@ window.TUTORIAL_CONTENT = {
 <p>No special skills required. No art degree needed. Just creativity, curiosity, and willingness to experiment. Let's dive in.</p>`
         },
         {
-          id: "m1-bob",
-          title: "Who is Bob Doyle?",
-          timeStart: 71,
-          content: `<p>Before we jump into the tools, let me tell you a bit about who I am and why I'm qualified to teach you this.</p>
-
-<p>I've had dreams of filmmaking since I was a kid. I remember being fascinated by visual storytelling, so I'd make my own movies — stop-motion animations with clay figures and Star Wars action figures. I was creating before I had the budget, the equipment, or the professional skills. I was just making.</p>
-
-<p>That's the spirit of this course. For decades, tools like professional cameras, video editing software, and digital studios were expensive barriers. They kept creative people out. But <strong>AI is changing everything</strong>. AI levels the playing field. It democratizes creative expression.</p>
-
-<p>If you have a vision, you can now bring it to life. You don't need permission. You don't need years of training. You just need to understand how to communicate with these tools — and that's exactly what I'm here to teach you.</p>`
-        },
-        {
           id: "m1-overview",
           title: "Overview of OpenArt",
           timeStart: 166,
