@@ -1582,10 +1582,7 @@
 
         contentDiv.innerHTML = cleanContent;
 
-        sectionDiv.appendChild(title);
-        sectionDiv.appendChild(contentDiv);
-
-        // Add video link after content
+        // Add video link right after heading
         const videoLink = document.createElement('a');
         videoLink.className = 'video-link';
         videoLink.dataset.module = moduleNum;
@@ -1598,7 +1595,10 @@
           playSection(moduleNum, sectionIndex);
         });
 
+        sectionDiv.appendChild(title);
         sectionDiv.appendChild(videoLink);
+        sectionDiv.appendChild(contentDiv);
+
         content.appendChild(sectionDiv);
       });
     }
