@@ -253,34 +253,32 @@ window.TUTORIAL_CONTENT = {
           id: "m2-expression-prompts",
           title: "Creating Variations With Emotion Words",
           timeStart: 164,
-          content: `<p>Let's get practical. Here's how to create emotional variations of the same image.</p>
+          content: `<p>Let's get practical. Here's how to create emotional variations of the same image. We're going to start with a simple portrait and then change just the emotion word in the prompt.</p>
 
 <p><strong>Start With a Base Prompt</strong></p>
-<p>Use one of your successful prompts from Module 1. For example: <em>"Close-up man posing for portrait in photo studio"</em></p>
-
-<p>Add aspect ratio and settings like you did before. Generate 4 images. Pick your favorite.</p>
+<p>Use a simple base prompt like: <em>"Close-up man posing for a portrait in a photo studio with a pensive expression."</em> Generate 4 images and pick your favorite.</p>
 
 <p><strong>Now Swap the Emotion Word</strong></p>
-<p>Keep everything else identical. Just change the emotion descriptor:</p>
+<p>Keep everything else identical. Just change the emotion descriptor. Try these variations:</p>
 
 <ul>
-<li><strong>Pensive version:</strong> "Close-up man posing for portrait in photo studio with a <strong>pensive</strong> expression"</li>
-<li><strong>Confident version:</strong> "Close-up man posing for portrait in photo studio with a <strong>confident</strong> expression"</li>
-<li><strong>Joyful version:</strong> "Close-up man posing for portrait in photo studio with a <strong>joyful</strong> expression"</li>
-<li><strong>Surprised version:</strong> "Close-up man posing for portrait in photo studio with a <strong>surprised</strong> expression"</li>
-<li><strong>Contemplative version:</strong> "Close-up man posing for portrait in photo studio with a <strong>contemplative</strong> expression"</li>
+<li><strong>Pensive version:</strong> "Close-up man posing for portrait in photo studio with a <strong>pensive</strong> expression" (thoughtful, looking off into the distance)</li>
+<li><strong>Confident version:</strong> "Close-up man posing for portrait in photo studio with a <strong>confident</strong> expression" (assured, but not overly toothy)</li>
+<li><strong>Worried version:</strong> "Close-up man posing for portrait in photo studio with a <strong>worried</strong> expression" (showing realistic signs of concern)</li>
+<li><strong>Laughing version:</strong> "Close-up man posing for portrait in photo studio with a <strong>laughing</strong> expression" (genuinely joyful)</li>
+<li><strong>Crying version:</strong> "Close-up man posing for portrait in photo studio with a <strong>crying</strong> expression" (emotional, with actual tears)</li>
 </ul>
 
 <p><strong>What You'll Observe</strong></p>
-<p>Generate each of these. Look closely at the results. You'll see subtle but significant differences:</p>
+<p>Generate each of these. Look closely at the results. You'll see how subtle emotion words create realistic, nuanced expressions:</p>
 <ul>
-<li>Eye contact and focus shift</li>
-<li>Mouth position changes</li>
-<li>Eyebrow position reflects the emotion</li>
-<li>Overall posture carries different energy</li>
+<li>Eye focus and gaze direction shifts with emotion</li>
+<li>Mouth position completely changes the feeling</li>
+<li>Eyebrow position reflects the specific emotion</li>
+<li>Overall face conveys authentic feeling, not cartoonish exaggeration</li>
 </ul>
 
-<p>This is the foundation of emotional storytelling. By chaining emotions together, you create a visual narrative arc.</p>
+<p>This is the foundation of emotional storytelling. By chaining emotions together, you create a visual narrative arc that viewers can feel.</p>
 
 <p><a href="#" class="video-link" data-module="2" data-time="164">▶ Watch Expression Prompts (2:40)</a></p>`
         },
@@ -288,31 +286,31 @@ window.TUTORIAL_CONTENT = {
           id: "m2-editing-existing",
           title: "Editing Existing Images as References",
           timeStart: 294,
-          content: `<p>Here's a powerful technique: using your generated images as reference images for new generations. This is how you create emotional transformations with the same composition and framing.</p>
+          content: `<p>Here's a powerful technique: using your generated images as reference images for new generations. This is how you create emotional transformations with the exact same composition and positioning.</p>
 
 <p><strong>The Workflow</strong></p>
 
 <p><strong>Step 1: Pick an Image to Edit</strong></p>
-<p>Take a generated image you love. Let's say it's a portrait of you in neutral expression.</p>
+<p>Take a generated image you love — a portrait of you with a neutral or one specific expression. This will be your reference for the next generation.</p>
 
-<p><strong>Step 2: Upload It as a Reference</strong></p>
-<p>In a new Create Image session, upload this image as your reference image. Now OpenArt sees this generated image as the template for composition and positioning.</p>
+<p><strong>Step 2: Upload It as a Reference Image</strong></p>
+<p>In a new Create Image session, drag this image into the reference area. OpenArt now sees this generated image as your template for composition, positioning, and framing.</p>
 
 <p><strong>Step 3: Give It New Emotional Instructions</strong></p>
-<p>Write a prompt that references the same scenario but with a different emotion:</p>
+<p>Write a prompt that tells the AI exactly what to change — the emotion — while keeping everything else identical:</p>
 
 <p><em>"He is sad and looking off into the distance. Keeping the position of the man the same, his face is now sad and looking off into the distance."</em></p>
 
-<p>Notice the language: "Keeping the position the same" tells the AI to preserve the framing and composition of the reference image.</p>
+<p>This explicit instruction — "Keeping the position the same" — is key. It tells the AI: "I love the framing and composition of this reference image. Just change the expression and emotion."</p>
 
 <p><strong>Step 4: Generate and Compare</strong></p>
 <p>Now you have two images:</p>
 <ul>
-<li><strong>Image A:</strong> Neutral expression, original composition</li>
-<li><strong>Image B:</strong> Sad expression, same composition</li>
+<li><strong>Image A:</strong> Original expression, original composition</li>
+<li><strong>Image B:</strong> New emotion (sad), identical composition and framing</li>
 </ul>
 
-<p>This is your <strong>before-and-after</strong>. It's the foundation of emotional storytelling.</p>
+<p>This is your <strong>before-and-after emotional transformation</strong>. Same person, same position, different feeling. When you animate these as a video later, it will be powerful.</p>
 
 <p><a href="#" class="video-link" data-module="2" data-time="294">▶ Watch Editing Existing Images (4:54)</a></p>`
         },
@@ -320,36 +318,38 @@ window.TUTORIAL_CONTENT = {
           id: "m2-multiple-references",
           title: "Using Multiple Reference Images (Omni Reference)",
           timeStart: 385,
-          content: `<p>OpenArt has a powerful feature called <strong>Omni Reference</strong> that lets you blend elements from multiple reference images into one creation. This opens up amazing possibilities.</p>
+          content: `<p>OpenArt has a powerful feature called <strong>Omni Reference</strong> that lets you blend elements from multiple reference images into one creation. This opens up amazing possibilities for personalization.</p>
 
 <p><strong>Why Multiple References?</strong></p>
-<p>Imagine you want to create an image of yourself holding an instrument, sitting on a car, in a specific location. You might have:</p>
+<p>Imagine you want to create an image of yourself holding a very specific instrument, sitting on a car, in a particular style. You might have:</p>
 <ul>
 <li>A reference photo of yourself (for facial consistency)</li>
-<li>A reference image of the car (for accurate details)</li>
-<li>A reference image of the instrument (to specify exactly which one)</li>
+<li>A reference image of the car you want (for exact details and style)</li>
+<li>A reference image of the instrument you want to hold (the exact one, not an AI interpretation of it)</li>
 </ul>
 
-<p>Without multiple references, you're relying on the AI to imagine all three elements. With Omni Reference, you're showing the AI exactly what you want.</p>
+<p>Without multiple references, you're trusting the AI to imagine all three elements correctly. With Omni Reference, you're showing the AI exactly what you want, and it incorporates all of those elements into one image.</p>
 
 <p><strong>How to Use It</strong></p>
 
-<p><strong>Upload Multiple Images</strong></p>
-<p>In the reference section, add 2-3 reference images. OpenArt will show them as "Image 1," "Image 2," etc.</p>
+<p><strong>Step 1: Add Multiple Reference Images</strong></p>
+<p>In the reference section, drag in 2-3 images. OpenArt will label them as "Image 1," "Image 2," "Image 3," etc.</p>
 
-<p><strong>Reference Them in Your Prompt</strong></p>
-<p>In your prompt, call out which image you're referencing:</p>
+<p><strong>Step 2: Reference Them Explicitly in Your Prompt</strong></p>
+<p>In your prompt, call out exactly which reference image you want the AI to use for which element:</p>
 
 <p><em>"The man sitting on the car is holding the instrument in image 2 with pride and joy."</em></p>
 
-<p>The AI now understands: use the composition of image 1, incorporate the instrument from image 2, and render it all with pride and joy.</p>
+<p>The AI now understands precisely: incorporate the instrument details from image 2, place the man on the car, and render his expression with pride and joy.</p>
 
-<p><strong>Example: Creating an Emotional Shift**</strong></p>
+<p><strong>Example: Creating Emotional Variations**</strong></p>
 <p>Generate that once: <em>"The man sitting on the car is holding the instrument in image 2 with pride and joy."</em></p>
 
-<p>Now generate again with a single word change: <em>"The man sitting on the car is holding the instrument in image 2 with terrible disappointment."</em></p>
+<p>Pick your favorite. Now use all the same references again but change only the emotion:</p>
 
-<p>Same setup. Same objects. Completely different emotional tone. This is how you build narrative tension in still images.</p>
+<p><em>"The man sitting on the car is holding the instrument in image 2 with terrible disappointment."</em></p>
+
+<p>Same setup. Same instrument. Completely different emotional tone and facial expression. This is how you build narrative tension and transformation in still images — perfect for the before-and-after sequences you'll animate in Module 3.</p>
 
 <p><a href="#" class="video-link" data-module="2" data-time="385">▶ Watch Multiple References (6:25)</a></p>`
         },
@@ -413,18 +413,18 @@ window.TUTORIAL_CONTENT = {
           id: "m3-intro",
           title: "Introduction & Quick Recap",
           timeStart: 0,
-          content: `<p>Welcome to <strong>Module 3: From Image to Motion With AI Video</strong>.</p>
+          content: `<p>Welcome to <strong>Module 3: From Image to Motion With AI Video</strong>. This is where the magic really starts.</p>
 
-<p>Let's recap where you are right now:</p>
+<p>Let's recap where you are:</p>
 
 <ul>
-<li><strong>Module 1:</strong> You learned to create custom images with prompts and reference photos. You placed yourself in different locations and scenarios.</li>
-<li><strong>Module 2:</strong> You learned to infuse those images with emotion. You created before-and-after emotional transformations.</li>
+<li><strong>Module 1:</strong> You created custom images of yourself in different locations and scenarios using prompts and reference photos.</li>
+<li><strong>Module 2:</strong> You infused those images with emotion. You created before-and-after emotional transformations showing how your face and expression change.</li>
 </ul>
 
-<p>Now comes the exciting part: <strong>bringing those images to life</strong>. Those static emotional images you created? We're going to animate them. We're going to create smooth transitions and movements that make your 2026 Moment feel real, dynamic, and cinematic.</p>
+<p>Now comes the thrilling part: <strong>bringing those images to life</strong>. Those static emotional images you created? We're going to animate them. We're going to create smooth, continuous transitions that make your 2026 Moment feel real, dynamic, and truly cinematic.</p>
 
-<p>This is where your project starts to feel less like a collection of pictures and more like a real story. Let's dive in.</p>
+<p>By the end of this module, you'll have videos showing your emotional journey. Not just a collection of pictures, but a real, moving story. Let's dive in.</p>
 
 <p><a href="#" class="video-link" data-module="3" data-time="0">▶ Watch Intro (0:00)</a></p>`
         },
@@ -459,34 +459,34 @@ window.TUTORIAL_CONTENT = {
           id: "m3-getting-started-video",
           title: "Getting Started With Image to Video",
           timeStart: 195,
-          content: `<p>Let's create your first video using the Image to Video tool.</p>
+          content: `<p>Let's create your first video using the Image to Video tool with start and end frames.</p>
 
 <p><strong>Step 1: Navigate to Video Tools</strong></p>
-<p>In OpenArt, go to the top menu. Look for <strong>Video > Image to Video</strong>. Click it. You'll land in the image-to-video workspace.</p>
+<p>In OpenArt, click <strong>Video > Image to Video</strong>. You'll land in the video creation workspace.</p>
 
-<p><strong>Step 2: Explore the Workspace**</strong></p>
-<p>You'll notice several options:</p>
+<p><strong>Step 2: Explore Your Options**</strong></p>
+<p>You'll see several video generation methods:</p>
 
 <ul>
 <li><strong>Text to Video:</strong> Generate video from a text prompt alone (we'll cover this in Module 4)</li>
 <li><strong>Image to Video:</strong> This is what we're using — start and end frame animation</li>
-<li><strong>Elements:</strong> Advanced layering options (optional for now)</li>
+<li><strong>Elements to Video & Video to Video:</strong> More advanced options we'll skip for now</li>
 </ul>
 
 <p><strong>Step 3: Upload Your Start Frame**</strong></p>
-<p>This is the emotional "before" image you created in Module 2. Drag and drop it into the start frame section.</p>
+<p>This is the emotional "before" image from Module 2. Drag and drop it into the start frame section, or click to upload from your history.</p>
 
 <p><strong>Step 4: Upload Your End Frame**</strong></p>
-<p>This is the emotional "after" image. OpenArt now has your beginning and ending point.</p>
+<p>This is the emotional "after" image. OpenArt now has both your beginning and ending point, and it will animate everything in between.</p>
 
 <p><strong>Step 5: Choose Your Video Model**</strong></p>
-<p>You'll see options for different video models. We'll talk about specific recommendations next, but for your first video, start with a reliable option like <strong>Seedance 1.5 Pro</strong>.</p>
+<p>You'll see options for different video models that support start and end frames (look for models labeled with "end frame"). For your first video, <strong>Seed Dance 1.5 Pro</strong> is an excellent choice.</p>
 
 <p><strong>Step 6: Set Duration**</strong></p>
-<p>How long should your video be? 9-10 seconds is a good starting point. This gives the AI time to smoothly animate from start to end without feeling rushed.</p>
+<p>How long should the video be? Start with 5-10 seconds. This gives the AI time to smoothly animate from start to end without feeling rushed.</p>
 
 <p><strong>Step 7: Generate**</strong></p>
-<p>Hit Create. The AI will process for a minute or two. You'll get back a smooth video transitioning from your start frame to your end frame.</p>
+<p>Hit Create. The AI will process for a minute or two, then you'll see a smooth video transitioning from your start frame to your end frame.</p>
 
 <p><a href="#" class="video-link" data-module="3" data-time="195">▶ Watch Getting Started (3:15)</a></p>`
         },
@@ -494,44 +494,56 @@ window.TUTORIAL_CONTENT = {
           id: "m3-video-models",
           title: "Exploring Different Video Models",
           timeStart: 310,
-          content: `<p>Just like with image generation, there are multiple AI video models, each with different strengths and capabilities.</p>
+          content: `<p>Just like with image generation, there are multiple AI video models available, each with different strengths, capabilities, and visual styles.</p>
 
 <p><strong>Why Different Models?**</strong></p>
-<p>Different models were trained differently and excel in different scenarios. By understanding the options, you can choose the best tool for your specific creative vision.</p>
+<p>Different models were trained on different data and with different objectives. Some excel at cinematic quality. Others at smooth motion. By testing multiple models with the same start and end frames, you can see which one best matches your creative vision.</p>
 
-<p><strong>Seedance 1.5 Pro</strong></p>
-<p>This is a great starting point. It:</p>
-
-<ul>
-<li>Supports audio natively (built-in audio processing)</li>
-<li>Renders at 720p resolution</li>
-<li>Handles various aspect ratios well</li>
-<li>Has intuitive controls</li>
-<li>Creates smooth, natural transitions</li>
-</ul>
-
-<p><strong>Kling 2.0 Pro</strong></p>
-<p>Another excellent option with:</p>
+<p><strong>Seed Dance 1.5 Pro</strong></p>
+<p>A powerful model that:</p>
 
 <ul>
-<li>Different visual style (worth experimenting with)</li>
-<li>Strong motion handling</li>
-<li>Alternative aesthetic to Seedance</li>
+<li>Supports audio natively (generates sound along with video)</li>
+<li>Renders at 720p (and up to 1080p in some cases)</li>
+<li>Gives you lots of control and options</li>
+<li>Creates smooth, intuitive transitions</li>
+<li>Allows durations up to 12 seconds</li>
 </ul>
 
-<p><strong>How to Compare</strong></p>
-<p>Here's a test: create a video with your start and end frames using Seedance. Watch the result. Then, go back and generate the same video with Kling 2.0 Pro. Compare them side-by-side. You'll see how differently the models interpolate between frames.</p>
+<p><strong>Kling 2.6 and Kling 2.5</strong></p>
+<p>Excellent alternatives with:</p>
+
+<ul>
+<li>Different visual aesthetics and motion characteristics</li>
+<li>Strong handling of emotional expressions and character movement</li>
+<li>Kling 2.6 is the newer version with enhanced capabilities</li>
+<li>Kling 2.5 still does great work (doesn't generate native audio, but handles video well)</li>
+</ul>
+
+<p><strong>Veo 3</strong></p>
+<p>The newest model that brings:</p>
+
+<ul>
+<li>Native audio generation (creates music and sound design automatically)</li>
+<li>Cinematic quality video</li>
+<li>Advanced emotional scene handling</li>
+<li>Smooth frame-to-frame interpolation</li>
+</ul>
+
+<p><strong>How to Compare Models</strong></p>
+<p>Here's the test: Create a video with your start and end frames using Seed Dance 1.5 Pro. Watch it. Then go back to the same images and generate with Kling 2.6. Notice how different the transitions feel, how the motion differs, even though the start and end points are identical. This is just AI — different models, different creative choices.</p>
 
 <p><strong>Which One to Use?</strong></p>
-<p>Both are solid. The choice often comes down to:</p>
+<p>All of them are good. The choice comes down to:</p>
 
 <ul>
-<li>Which aesthetic you prefer</li>
+<li>Which visual style appeals to you</li>
 <li>Which model's motion feels more natural to you</li>
-<li>Which one works better with your specific images</li>
+<li>Whether you want native audio (Seed Dance and Veo do, Kling 2.5 doesn't)</li>
+<li>Which one consistently works best with your specific images</li>
 </ul>
 
-<p>Don't overthink it. Pick one, generate, and keep learning.</p>
+<p>The best way to learn: pick one, generate, watch the result, then try another with the same frames and compare. You'll quickly develop a feel for which model works best for your creative vision.</p>
 
 <p><a href="#" class="video-link" data-module="3" data-time="310">▶ Watch Video Models (5:10)</a></p>`
         },
@@ -539,37 +551,38 @@ window.TUTORIAL_CONTENT = {
           id: "m3-support-prompts",
           title: "Using Support Prompts to Guide Animation",
           timeStart: 538,
-          content: `<p>Here's where AI video gets even more powerful: <strong>support prompts</strong>.</p>
+          content: `<p>Here's where AI video gets even more powerful: <strong>support prompts</strong> (also called guidance prompts).</p>
 
 <p><strong>What Are Support Prompts?</strong></p>
-<p>A support prompt is descriptive text that tells the AI what should happen during the transition between your start and end frames. It's your creative direction for the animation.</p>
+<p>A support prompt is descriptive text that tells the AI exactly what should happen during the transition between your start and end frames. It's your creative direction for how the animation should unfold.</p>
 
-<p>Without a support prompt, the AI tries to figure out the motion on its own. With a support prompt, you guide it.</p>
+<p>Without a support prompt, the AI tries to figure out the motion on its own — sometimes it makes creative choices you didn't intend (like unexpected camera movements). With a support prompt, you guide it toward your vision.</p>
 
 <p><strong>Example: Telling a Story With Motion</strong></p>
-<p>Let's say your start frame is you waiting nervously before performing. Your end frame is you on stage, confident and radiant.</p>
+<p>Start frame: You looking nervous and anxious on an empty stage.</p>
+<p>End frame: You confident and playing, with a band behind you.</p>
 
-<p>Your support prompt might be: <em>"The worried man is joined by his bandmates who walk onto the stage and they begin to play."</em></p>
+<p>Your support prompt: <em>"The worried man is joined by his bandmates who walk onto the stage and they begin to play."</em></p>
 
 <p>Notice what you've done:</p>
 
 <ul>
 <li>You've described <strong>what happens</strong> during the video (bandmates arrive)</li>
-<li>You've guided the <strong>visual transition</strong> (movement from one emotional state to another)</li>
-<li>You've provided <strong>narrative context</strong> (this isn't random animation; it's a scene unfolding)</li>
+<li>You've guided the <strong>visual progression</strong> (from alone and anxious to part of something larger and confident)</li>
+<li>You've provided <strong>narrative logic</strong> (this isn't random animation; it's a scene with a clear story)</li>
 </ul>
 
 <p><strong>How to Write Support Prompts</strong></p>
 
-<p><strong>Be Specific About Motion:**</strong> "The man stands up and walks toward the window"</p>
-<p><strong>Add Emotional Context:</strong> "The man slowly relaxes as he realizes everything will be okay"</p>
-<p><strong>Reference Camera Movement:</strong> "The camera pulls back to reveal the full stage"</p>
-<p><strong>Combine Elements:</strong> "The crowd cheers as the man steps forward, raising his arms in victory"</p>
+<p><strong>Control Camera Movement:</strong> "Camera holds steady on man as he changes his facial expression" (keeps focus on emotion, not distracting camera work)</p>
+<p><strong>Describe What Enters the Scene:</strong> "Bandmates walk onto the stage"</p>
+<p><strong>Add Emotional Progression:</strong> "The man relaxes and gains confidence as the band joins"</p>
+<p><strong>Reference Timing:</strong> "The transition happens smoothly over the duration of the shot"</p>
 
-<p><strong>Important:** Your support prompt should align with your start and end frames. If your start frame shows you indoors and your end frame shows you on stage, your support prompt should explain how that transition happens.</p>
+<p><strong>Important:** Your support prompt should connect your start and end frames logically. If start frame = nervous on empty stage, and end frame = confident with band, your prompt should explain that progression.</p>
 
 <p><strong>Testing Different Support Prompts</strong></p>
-<p>Keep your start and end frames the same. Change the support prompt. Generate again. See how the animation changes. This is how you fine-tune your emotional storytelling.</p>
+<p>Keep your start and end frames identical. Change only the support prompt. Generate again. You'll see how the same two images can be connected in completely different ways depending on what story you tell.</p>
 
 <p><a href="#" class="video-link" data-module="3" data-time="538">▶ Watch Support Prompts (8:58)</a></p>`
         },
@@ -577,31 +590,31 @@ window.TUTORIAL_CONTENT = {
           id: "m3-radical-transitions",
           title: "Scene Transitions: Pushing the Boundaries",
           timeStart: 788,
-          content: `<p>Now here's where things get really fun: <strong>you can create transitions between radically different images</strong>.</p>
+          content: `<p>Now here's where things get really fun: <strong>you can create transitions between radically different images</strong>. Images that have nothing to do with each other logically, but tell a powerful visual story.</p>
 
 <p><strong>Breaking the Rules of Physics**</strong></p>
-<p>In traditional filmmaking, you need continuity. You can't jump from a character indoors to the same character on Mars without an explanation.</p>
+<p>In traditional filmmaking, you need strict continuity. You can't jump from a character indoors to the same character on Mars without an explanation or cut.</p>
 
-<p>With AI video, you can. And it's stunning.</p>
+<p>With AI video, you can do this. And it creates something magical.</p>
 
 <p><strong>Example: Extreme Transition**</strong></p>
-<p>Start frame: You sitting on a car, drinking coffee in the snow.</p>
-<p>End frame: You sitting on another car, in a desert at sunset.</p>
+<p>Start frame: You sitting on a car, drinking coffee in a snowy cabin setting.</p>
+<p>End frame: You sitting on a car on a desert highway at night.</p>
 
-<p>These images have nothing to do with each other. But the AI can create a smooth, dreamlike transition between them. The "you" element stays consistent, but the environment transforms.</p>
+<p>These images are completely different locations, completely different lighting, completely different contexts. But the "you" element is consistent across both. The AI is smart enough to animate a smooth transition between them, focusing on what's the same (you) and smoothly morphing what's different (the entire environment).</p>
 
 <p><strong>Why This Works**</strong></p>
-<p>The AI focuses on what's consistent between the frames (you) and smoothly animates the differences (environment, lighting). The result feels surreal, almost magical. Perfect for conveying a 2026 vision that's aspirational and transformative.</p>
+<p>The AI recognizes the constant element (you, your positioning) and animates the transformation of everything else. The result feels surreal, dreamlike, almost metaphorical. Perfect for conveying a 2026 vision that's aspirational and transformative.</p>
 
-<p><strong>Support Prompts Become Essential**</strong></p>
-<p>When you're doing radical transitions, support prompts are more important. They help the AI understand the narrative:</p>
+<p><strong>Support Prompts Become Key**</strong></p>
+<p>When you're doing radical transitions like this, support prompts help you guide the transition:</p>
 
-<p><em>"The scene transitions from a snowy urban environment to a warm desert landscape, as the man moves seamlessly between moments."</em></p>
+<p><em>"The man of the cabin puts down his coffee, the parrot flies away. He stands up and the camera tracks him as he walks and takes off his coat. He walks seamlessly with no cuts to his purple car parked on a city street and sits on the hood."</em></p>
 
-<p>Or: <em>"Don't worry about rules of physics. Have fun and play."</em> (This is actually from the video, and it's encouraging the AI to embrace the surreal nature of the transition.)</p>
+<p>Or embrace the surreal: <em>"Don't worry about rules of physics. Have fun and play."</em></p>
 
 <p><strong>Creative Freedom**</strong></p>
-<p>You're not bound by reality. Use that. Your 2026 Moment can include impossible transitions, dreamlike sequences, and visual metaphors. That's the beauty of AI video.</p>
+<p>You're not bound by reality. Your 2026 Moment can include impossible transitions, dreamlike sequences, and visual metaphors. That's the beauty of AI cinematography. Tell the story you want to tell, not the one physics allows.</p>
 
 <p><a href="#" class="video-link" data-module="3" data-time="788">▶ Watch Scene Transitions (13:08)</a></p>`
         },
@@ -620,33 +633,33 @@ window.TUTORIAL_CONTENT = {
 
 <ul>
 <li>Start Frame: Your "before" emotional image (anticipatory, nervous, hopeful)</li>
-<li>End Frame: Your "after" emotional image (joyful, relieved, proud)</li>
-<li>Model: Seedance 1.5 Pro</li>
+<li>End Frame: Your "after" emotional image (joyful, relieved, victorious)</li>
+<li>Model: Seed Dance 1.5 Pro (great for smooth transitions and optional native audio)</li>
 <li>Duration: 9-10 seconds</li>
-<li>Support Prompt: Write a sentence or two describing what happens during the transition. What's the narrative?</li>
+<li>Support Prompt (optional but recommended): Write a sentence or two describing what happens during the transition. What's the story arc? What emotional journey are we watching?</li>
 </ul>
 
-<p>Generate and watch the result. This is your first motion-based storytelling.</p>
+<p>Generate and watch the result. This is your first motion-based storytelling. Notice how the emotion shifts in real time.</p>
 
-<p><strong>Video 2: Experiment With Models**</strong></p>
-<p>Take the same start and end frames, but generate it again using Kling 2.0 Pro. Compare the two videos. Which one feels better to you? Why?</p>
+<p><strong>Video 2: Test Different Models**</strong></p>
+<p>Take the exact same start and end frames and support prompt, but generate it again using a different model — try Kling 2.6 or Veo 3. Compare the two videos side-by-side. Which one feels better to you? Which one has motion that resonates more? Notice how different models create different transitions.</p>
 
-<p><strong>Video 3 (Optional): A Radical Transition**</strong></p>
-<p>If you're feeling adventurous, create two very different images (different locations, very different scenarios) and use them as start and end frames. Write a creative support prompt that guides the transition. See how the AI handles the "impossible" jump.</p>
+<p><strong>Video 3 (Optional): Experiment & Play**</strong></p>
+<p>If you're feeling adventurous, create a video using two very different images (different locations, completely different scenarios) and a creative support prompt that explains the transition. See how the AI handles the "impossible" jump between moments. Don't worry about rules of physics — have fun with it.</p>
 
 <p><strong>What You're Learning**</strong></p>
 
 <ul>
-<li>How start and end frames create animation</li>
-<li>How support prompts guide the story</li>
-<li>How different models produce different results</li>
-<li>The basics of visual motion and pacing</li>
+<li>How start and end frames create smooth animation</li>
+<li>How support prompts guide the story the AI tells</li>
+<li>How different models produce different visual and motion results</li>
+<li>The power of emotional arcs in motion</li>
 </ul>
 
-<p><strong>Important:** Save your best videos. You'll need them for Module 4, where we're bringing everything together into a complete story.</p>
+<p><strong>Pro Tip:** Save your best videos in a folder. You'll need them for Module 4, where we're bringing everything together into your complete 2026 Moment Video.</p>
 
 <p><strong>What's Next?**</strong></p>
-<p>In Module 4, you're going to take all these individual videos and images and assemble them into a complete narrative. You're going to add music, create transitions, and export a professional 2026 Moment Video. We're almost there.</p>
+<p>In Module 4, you're going to assemble all these individual videos and images into a complete, professional narrative. You'll add music, arrange your clips on a timeline, and export your final 2026 Moment Video. We're almost there.</p>
 
 <p><a href="#" class="video-link" data-module="3" data-time="728">▶ Watch Homework (12:08)</a></p>`
         }
