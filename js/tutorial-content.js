@@ -480,7 +480,7 @@ window.TUTORIAL_CONTENT = {
 <p>This is the emotional "after" image. OpenArt now has both your beginning and ending point, and it will animate everything in between.</p>
 
 <p><strong>Step 5: Choose Your Video Model**</strong></p>
-<p>You'll see options for different video models that support start and end frames (look for models labeled with "end frame"). For your first video, <strong>Seed Dance 1.5 Pro</strong> is an excellent choice.</p>
+<p>You'll see options for different video models that support start and end frames (look for models labeled with "end frame"). For your first video, <strong>Seedance 1.5 Pro</strong> is an excellent choice.</p>
 
 <p><strong>Step 6: Set Duration**</strong></p>
 <p>How long should the video be? Start with 5-10 seconds. This gives the AI time to smoothly animate from start to end without feeling rushed.</p>
@@ -499,7 +499,7 @@ window.TUTORIAL_CONTENT = {
 <p><strong>Why Different Models?**</strong></p>
 <p>Different models were trained on different data and with different objectives. Some excel at cinematic quality. Others at smooth motion. By testing multiple models with the same start and end frames, you can see which one best matches your creative vision.</p>
 
-<p><strong>Seed Dance 1.5 Pro</strong></p>
+<p><strong>Seedance 1.5 Pro</strong></p>
 <p>A powerful model that:</p>
 
 <ul>
@@ -531,7 +531,7 @@ window.TUTORIAL_CONTENT = {
 </ul>
 
 <p><strong>How to Compare Models</strong></p>
-<p>Here's the test: Create a video with your start and end frames using Seed Dance 1.5 Pro. Watch it. Then go back to the same images and generate with Kling 2.6. Notice how different the transitions feel, how the motion differs, even though the start and end points are identical. This is just AI — different models, different creative choices.</p>
+<p>Here's the test: Create a video with your start and end frames using Seedance 1.5 Pro. Watch it. Then go back to the same images and generate with Kling 2.6. Notice how different the transitions feel, how the motion differs, even though the start and end points are identical. This is just AI — different models, different creative choices.</p>
 
 <p><strong>Which One to Use?</strong></p>
 <p>All of them are good. The choice comes down to:</p>
@@ -539,7 +539,7 @@ window.TUTORIAL_CONTENT = {
 <ul>
 <li>Which visual style appeals to you</li>
 <li>Which model's motion feels more natural to you</li>
-<li>Whether you want native audio (Seed Dance and Veo do, Kling 2.5 doesn't)</li>
+<li>Whether you want native audio (Seedance and Veo do, Kling 2.5 doesn't)</li>
 <li>Which one consistently works best with your specific images</li>
 </ul>
 
@@ -634,7 +634,7 @@ window.TUTORIAL_CONTENT = {
 <ul>
 <li>Start Frame: Your "before" emotional image (anticipatory, nervous, hopeful)</li>
 <li>End Frame: Your "after" emotional image (joyful, relieved, victorious)</li>
-<li>Model: Seed Dance 1.5 Pro (great for smooth transitions and optional native audio)</li>
+<li>Model: Seedance 1.5 Pro (great for smooth transitions and optional native audio)</li>
 <li>Duration: 9-10 seconds</li>
 <li>Support Prompt (optional but recommended): Write a sentence or two describing what happens during the transition. What's the story arc? What emotional journey are we watching?</li>
 </ul>
