@@ -339,11 +339,57 @@
     /* LEFT PANE - TUTORIAL CONTENT */
     .left-pane {
       flex: 0 0 60%;
+      min-width: 30%;
+      max-width: 75%;
       overflow-y: auto;
-      border-right: 1px solid #e0e0e0;
+      border-right: none;
       display: flex;
       flex-direction: column;
       background-color: var(--left-pane-bg);
+    }
+
+    /* PANE DIVIDER */
+    .pane-divider {
+      flex: 0 0 6px;
+      background-color: #1a1a1a;
+      cursor: col-resize;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      z-index: 10;
+      transition: background-color 0.2s;
+    }
+
+    .pane-divider:hover,
+    .pane-divider.dragging {
+      background-color: var(--green);
+    }
+
+    .pane-divider-grip {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+      opacity: 0.5;
+      transition: opacity 0.2s;
+    }
+
+    .pane-divider:hover .pane-divider-grip,
+    .pane-divider.dragging .pane-divider-grip {
+      opacity: 1;
+    }
+
+    .pane-divider-grip span {
+      display: block;
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background-color: #888;
+    }
+
+    .pane-divider:hover .pane-divider-grip span,
+    .pane-divider.dragging .pane-divider-grip span {
+      background-color: #000;
     }
 
     .toc-toggle {
@@ -595,7 +641,8 @@
 
     /* RIGHT PANE - VIDEO PLAYER */
     .right-pane {
-      flex: 0 0 40%;
+      flex: 1;
+      min-width: 25%;
       background-color: var(--surface);
       display: flex;
       flex-direction: column;
@@ -856,11 +903,17 @@
 
     /* MOBILE RESPONSIVE */
     @media (max-width: 1024px) {
+      .pane-divider {
+        display: none;
+      }
+
       .content-wrapper {
         flex-direction: column;
       }
 
       .left-pane {
+        max-width: 100%;
+        min-width: 0;
         flex: 0 0 auto;
         min-height: 0;
         flex: 1;
@@ -1140,6 +1193,15 @@
 
         <!-- TUTORIAL CONTENT -->
         <div class="tutorial-content" id="tutorial-content"></div>
+      </div>
+
+      <!-- RESIZABLE DIVIDER -->
+      <div class="pane-divider" id="pane-divider" title="Drag to resize panes (double-click to reset)">
+        <div class="pane-divider-grip">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
       </div>
 
       <!-- RIGHT PANE - VIDEO PLAYER -->
@@ -2003,6 +2065,61 @@
       videoContainer.classList.remove('mobile-show');
     }
 
+    // ===== PANE DIVIDER =====
+    function setupPaneDivider() {
+      const divider = document.getElementById('pane-divider');
+      const leftPane = document.querySelector('.left-pane');
+      const wrapper = document.querySelector('.content-wrapper');
+      if (!divider || !leftPane || !wrapper) return;
+
+      let isDragging = false;
+      const DEFAULT_LEFT_PCT = 60;
+      const MIN_LEFT_PCT = 30;
+      const MAX_LEFT_PCT = 75;
+
+      function onDragStart(e) {
+        // Don't activate on mobile stacked layout
+        if (window.innerWidth <= 1024) return;
+        isDragging = true;
+        divider.classList.add('dragging');
+        document.body.style.userSelect = 'none';
+        document.body.style.cursor = 'col-resize';
+        e.preventDefault();
+      }
+
+      function onDragMove(e) {
+        if (!isDragging) return;
+        const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+        const rect = wrapper.getBoundingClientRect();
+        let pct = ((clientX - rect.left) / rect.width) * 100;
+        pct = Math.max(MIN_LEFT_PCT, Math.min(MAX_LEFT_PCT, pct));
+        leftPane.style.flex = `0 0 ${pct}%`;
+      }
+
+      function onDragEnd() {
+        if (!isDragging) return;
+        isDragging = false;
+        divider.classList.remove('dragging');
+        document.body.style.userSelect = '';
+        document.body.style.cursor = '';
+      }
+
+      // Mouse events
+      divider.addEventListener('mousedown', onDragStart);
+      document.addEventListener('mousemove', onDragMove);
+      document.addEventListener('mouseup', onDragEnd);
+
+      // Touch events
+      divider.addEventListener('touchstart', onDragStart, { passive: false });
+      document.addEventListener('touchmove', onDragMove, { passive: false });
+      document.addEventListener('touchend', onDragEnd);
+
+      // Double-click to reset
+      divider.addEventListener('dblclick', () => {
+        leftPane.style.flex = `0 0 ${DEFAULT_LEFT_PCT}%`;
+      });
+    }
+
     // ===== INITIALIZATION =====
     function initialize() {
       // Load progress
@@ -2033,6 +2150,9 @@
       setupScrollSpy();
       setupSearch();
       setupMobilePlayer();
+
+      // Setup resizable pane divider
+      setupPaneDivider();
 
       // Handle window resize
       window.addEventListener('resize', () => {
