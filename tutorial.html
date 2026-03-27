@@ -1818,7 +1818,7 @@
         });
       }, { threshold: [0.7] });
 
-      document.querySelectorAll('[id^="m"]').forEach(section => {
+      document.querySelectorAll('.module-section').forEach(section => {
         observer.observe(section);
       });
     }
@@ -1842,7 +1842,7 @@
     function updateTableOfContents() {
       document.querySelectorAll('.toc-section-link').forEach(link => {
         const text = link.textContent.trim();
-        const sectionId = Array.from(document.querySelectorAll('[id^="m"]')).find(el => {
+        const sectionId = Array.from(document.querySelectorAll('.module-section')).find(el => {
           const subtitle = el.querySelector('.section-subtitle');
           return subtitle && subtitle.textContent.includes(text);
         })?.id;
