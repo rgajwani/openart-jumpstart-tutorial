@@ -528,29 +528,34 @@ window.TUTORIAL_CONTENT = {
 <p><a href="#" class="video-link" data-module="3" data-time="538">▶ Watch Support Prompts (8:58)</a></p>`
         },
         {
-          id: "m3-support-prompts",
-          title: "Using Support Prompts to Guide Animation",
-          timeStart: 538,
-          content: `<p>Create transitions between radically different images for powerful visual storytelling.</p>
+          id: "m3-creative-elements",
+          title: "Adding Characters and Objects Through Prompts",
+          timeStart: 551,
+          content: `<p>You can introduce characters, objects, or actions that exist <em>only in the transition</em> — not in either frame — by describing them in your support prompt.</p>
 
-<p><strong>Breaking Physics</strong></p>
-<p>Traditional film needs strict continuity. AI video doesn't. You can jump from indoors to desert without explanation.</p>
+<p><strong>The Rule</strong></p>
+<p>Whatever you prompt into the scene must logically exit before the end frame. The AI will only accept it if it can disappear before the last frame is reached.</p>
 
-<p><strong>Example: Extreme Transition</strong></p>
-<p>Start frame: You on a car drinking coffee in snowy cabin</p>
-<p>End frame: You on a car on a desert highway at night</p>
+<p><strong>Example: The Bigfoot Hand-Off</strong></p>
+<p>Start frame: You sitting on your car (no instrument)<br>
+End frame: You sitting on your car holding a ukulele</p>
 
-<p>Completely different locations and lighting, but you're the constant. The AI animates the environment transformation while keeping you stable. The result feels surreal and metaphorical — perfect for an aspirational 2026 vision.</p>
+<p>Prompt: <em>"As the man sits on his car, Bigfoot walks in carrying an instrument, which he hands to the man, then walks away."</em></p>
 
-<p><strong>Use Support Prompts to Guide</strong></p>
-<p><em>"He puts down his coffee, stands up, and walks to his car. The cabin fades and he's driving on a desert highway at night."</em></p>
+<p>Bigfoot isn't in either frame — he's purely a narrative device for the transition. Because he walks away, the AI can resolve him out before the end frame.</p>
 
-<p>Or embrace the dreamlike: <em>"Forget physics. Have fun."</em></p>
+<p><strong>Example: The Oscar Ceremony</strong></p>
+<p>Start frame: A woman presenting an award on stage<br>
+End frame: You holding the Oscar in a tuxedo</p>
 
-<p><strong>Creative Freedom</strong></p>
-<p>Your 2026 Moment isn't limited by reality. Include impossible transitions, dreamlike sequences, and visual metaphors. Tell the story you want, not the one physics allows.</p>
+<p>Prompt: <em>"The woman announces Bob Doyle is the winner of the Oscar for Best Actor in a web tutorial. The man in the blue and purple tuxedo walks in and accepts the award."</em></p>
 
-<p><a href="#" class="video-link" data-module="3" data-time="788">▶ Watch Scene Transitions (13:08)</a></p>`
+<p>The presenter exits naturally as you walk in — no physics problem for the AI to solve.</p>
+
+<p><strong>Key Principle</strong></p>
+<p>Think of your prompt as a stage direction. Bring in what you need, give it something to do, then write it out of the scene before the curtain falls on your end frame.</p>
+
+<p><a href="#" class="video-link" data-module="3" data-time="551">▶ Watch Adding Elements (9:11)</a></p>`
         },
         {
           id: "m3-radical-transitions",
