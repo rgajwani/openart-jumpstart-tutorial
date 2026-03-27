@@ -1628,6 +1628,7 @@
         const sectionLink = document.createElement('button');
         sectionLink.className = 'toc-section-link';
         sectionLink.type = 'button';
+        sectionLink.dataset.sectionId = section.id;
         if (state.completedSections.has(section.id)) {
           sectionLink.classList.add('completed');
         }
@@ -1796,45 +1797,48 @@
     // ===== SCROLL SPY & PROGRESS TRACKING =====
     let scrollSpyObserver = null;
     function setupScrollSpy() {
+      const contentRoot = document.getElementById('tutorial-content');
+      if (!contentRoot) return;
+
       if (scrollSpyObserver) {
         scrollSpyObserver.disconnect();
         scrollSpyObserver = null;
       }
+
       const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
+        let progressChanged = false;
+
+        entries.forEach((entry) => {
           const id = entry.target.id;
 
-          // Track completion
-          if (entry.isIntersecting && entry.intersectionRatio >= 0.7) {
+          if (entry.isIntersecting && entry.intersectionRatio >= 0.35) {
             if (!state.completedSections.has(id)) {
               state.completedSections.add(id);
-              Storage.save();
-              updateProgress();
-              updateTableOfContents();
-            }
-          }
-
-          // Highlight in ToC
-          if (entry.isIntersecting) {
-            document.querySelectorAll('.toc-section-link').forEach(link => {
-              link.classList.remove('active');
-            });
-            const linkText = entry.target.querySelector('.section-subtitle')?.textContent;
-            if (linkText) {
-              document.querySelectorAll('.toc-section-link').forEach(link => {
-                if (link.textContent.trim().endsWith(entry.target.querySelector('.section-subtitle').textContent.trim())) {
-                  link.classList.add('active');
-                }
-              });
+              progressChanged = true;
             }
           }
         });
-      }, { threshold: [0.7] });
+
+        if (progressChanged) {
+          Storage.save();
+          updateProgress();
+          updateTableOfContents();
+        }
+
+        updateActiveSection();
+      }, {
+        root: contentRoot,
+        threshold: [0.15, 0.35, 0.6]
+      });
 
       scrollSpyObserver = observer;
-      document.querySelectorAll('.module-section').forEach(section => {
+      document.querySelectorAll('.module-section').forEach((section) => {
         observer.observe(section);
       });
+
+      contentRoot.removeEventListener('scroll', updateActiveSection);
+      contentRoot.addEventListener('scroll', updateActiveSection, { passive: true });
+      updateActiveSection();
     }
 
     // ===== PROGRESS TRACKING =====
@@ -1854,18 +1858,39 @@
     }
 
     function updateTableOfContents() {
-      document.querySelectorAll('.toc-section-link').forEach(link => {
-        const text = link.textContent.trim();
-        const sectionId = Array.from(document.querySelectorAll('.module-section')).find(el => {
-          const subtitle = el.querySelector('.section-subtitle');
-          return subtitle && subtitle.textContent.includes(text);
-        })?.id;
+      document.querySelectorAll('.toc-section-link').forEach((link) => {
+        const sectionId = link.dataset.sectionId;
+        link.classList.toggle(
+          'completed',
+          Boolean(sectionId) && state.completedSections.has(sectionId)
+        );
+      });
+    }
 
-        if (sectionId && state.completedSections.has(sectionId)) {
-          link.classList.add('completed');
-        } else if (sectionId) {
-          link.classList.remove('completed');
+    function updateActiveSection() {
+      const contentRoot = document.getElementById('tutorial-content');
+      if (!contentRoot) return;
+
+      const rootRect = contentRoot.getBoundingClientRect();
+      const anchorY = rootRect.top + 120;
+
+      let activeId = null;
+      let bestDistance = Infinity;
+
+      document.querySelectorAll('.module-section').forEach((section) => {
+        const rect = section.getBoundingClientRect();
+        const visible = rect.bottom > rootRect.top && rect.top < rootRect.bottom;
+        if (!visible) return;
+
+        const distance = Math.abs(rect.top - anchorY);
+        if (distance < bestDistance) {
+          bestDistance = distance;
+          activeId = section.id;
         }
+      });
+
+      document.querySelectorAll('.toc-section-link').forEach((link) => {
+        link.classList.toggle('active', link.dataset.sectionId === activeId);
       });
     }
 
